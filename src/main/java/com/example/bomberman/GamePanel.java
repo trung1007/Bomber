@@ -25,9 +25,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Bomberman bomber = new Bomberman(this, keyboard);
     public Bomb bomb = new Bomb(this, keyboard);
 
-
     public Balloon balloon = new Balloon(this);
     Tile tile = new Tile(this);
+    Item item = new Item(this);
     public CheckCollision checkCollision = new CheckCollision(this);
 
     public GamePanel() {
@@ -84,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable {
         tile.render(g2);
         bomber.render(g2);
         bomb.render(g2);
-
+        item.render(g2);
         g2.dispose();
     }
 }

@@ -35,6 +35,6 @@ public class Item {
     }
     public void render(Graphics2D g2){
         g2.drawImage(bombSize, 50, 50, gamePanel.SCALED_SIZE, gamePanel.SCALED_SIZE, null);
-    }
 
+    }
 }
