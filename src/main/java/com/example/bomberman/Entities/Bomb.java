@@ -105,39 +105,38 @@ public class Bomb extends Entity {
             g2.drawImage(image, bombX, bombY, rec, rec, null);
             if (isExplored) {
                 if(image==null){
-                    double time=(System.nanoTime()/1000000000)/1000;
                     if (countTime <= Exploring) {
                         g2.drawImage(center1,bombX,bombY,rec,rec,null);
-                        g2.drawImage(ver1, bombX, bombY + rec, rec, rec, null);
-                        g2.drawImage(ver1, bombX, bombY - rec, rec, rec, null);
-                        g2.drawImage(hor1, bombX + rec, bombY, rec, rec, null);
-                        g2.drawImage(hor1, bombX - rec, bombY, rec, rec, null);
-                        g2.drawImage(up1, bombX, bombY - 2 * rec, rec, rec, null);
-                        g2.drawImage(down1, bombX, bombY + 2 * rec, rec, rec, null);
-                        g2.drawImage(left1, bombX - 2 * rec, bombY, rec, rec, null);
-                        g2.drawImage(right1, bombX + 2 * rec, bombY, rec, rec, null);
+//                        g2.drawImage(ver1, bombX, bombY + rec, rec, rec, null);
+//                        g2.drawImage(ver1, bombX, bombY - rec, rec, rec, null);
+//                        g2.drawImage(hor1, bombX + rec, bombY, rec, rec, null);
+//                        g2.drawImage(hor1, bombX - rec, bombY, rec, rec, null);
+                        g2.drawImage(up1, bombX, bombY - rec, rec, rec, null);
+                        g2.drawImage(down1, bombX, bombY + rec, rec, rec, null);
+                        g2.drawImage(left1, bombX - rec, bombY, rec, rec, null);
+                        g2.drawImage(right1, bombX +  rec, bombY, rec, rec, null);
 
                     } else if (countTime <= Exploring * 2) {
                         g2.drawImage(center2,bombX,bombY,rec,rec,null);
-                        g2.drawImage(ver2, bombX, bombY + rec, rec, rec, null);
+                        /*g2.drawImage(ver2, bombX, bombY + rec, rec, rec, null);
                         g2.drawImage(ver2, bombX, bombY - rec, rec, rec, null);
                         g2.drawImage(hor2, bombX + rec, bombY, rec, rec, null);
-                        g2.drawImage(hor2, bombX - rec, bombY, rec, rec, null);
-                        g2.drawImage(up2, bombX, bombY - 2 * rec, rec, rec, null);
-                        g2.drawImage(down2, bombX, bombY + 2 * rec, rec, rec, null);
-                        g2.drawImage(left2, bombX - 2 * rec, bombY, rec, rec, null);
-                        g2.drawImage(right2, bombX + 2 * rec, bombY, rec, rec, null);
+                        g2.drawImage(hor2, bombX - rec, bombY, rec, rec, null);*/
+                        g2.drawImage(up2, bombX, bombY -  rec, rec, rec, null);
+                        g2.drawImage(down2, bombX, bombY + rec, rec, rec, null);
+                        g2.drawImage(left2, bombX -  rec, bombY, rec, rec, null);
+                        g2.drawImage(right2, bombX +  rec, bombY, rec, rec, null);
 
                     } else if (countTime <= Exploring * 3) {
                         g2.drawImage(center3,bombX,bombY,rec,rec,null);
-                        g2.drawImage(ver3, bombX, bombY + rec, rec, rec, null);
+                        /*g2.drawImage(ver3, bombX, bombY + rec, rec, rec, null);
                         g2.drawImage(ver3, bombX, bombY - rec, rec, rec, null);
                         g2.drawImage(hor3, bombX + rec, bombY, rec, rec, null);
-                        g2.drawImage(hor3, bombX - rec, bombY, rec, rec, null);
-                        g2.drawImage(up3, bombX, bombY - 2 * rec, rec, rec, null);
-                        g2.drawImage(down3, bombX, bombY + 2 * rec, rec, rec, null);
-                        g2.drawImage(left3, bombX - 2 * rec, bombY, rec, rec, null);
-                        g2.drawImage(right3, bombX + 2 * rec, bombY, rec, rec, null);
+                        g2.drawImage(hor3, bombX - rec, bombY, rec, rec, null);*/
+                        g2.drawImage(up3, bombX, bombY -  rec, rec, rec, null);
+                        g2.drawImage(down3, bombX, bombY +  rec, rec, rec, null);
+                        g2.drawImage(left3, bombX -  rec, bombY, rec, rec, null);
+                        g2.drawImage(right3, bombX +  rec, bombY, rec, rec, null);
 
                     }
                     if (countTime == Exploring * 3) {
@@ -146,8 +145,6 @@ public class Bomb extends Entity {
                         countTime=0;
                     }
                 }
-
-
             }
         }
     }
