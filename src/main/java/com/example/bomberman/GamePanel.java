@@ -1,6 +1,7 @@
 package com.example.bomberman;
 
 import com.example.bomberman.Entities.*;
+import com.example.bomberman.Entities.Object;
 import com.example.bomberman.input.Keyboard;
 
 import javax.swing.*;
@@ -22,12 +23,12 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     Keyboard keyboard = new Keyboard();
 
-    public Bomberman bomber = new Bomberman(this, keyboard);
+    public Bomber bomber = new Bomber(this, keyboard);
     public Bomb bomb = new Bomb(this, keyboard);
 
     public Balloon balloon = new Balloon(this);
-    Tile tile = new Tile(this);
-    Item item = new Item(this);
+    Object object = new Object(this);
+
     public CheckCollision checkCollision = new CheckCollision(this);
 
     public GamePanel() {
@@ -64,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable {
                 drawCount++;
             }
             if (timer >= 1000000000) {
-                System.out.println(drawCount);
+//                System.out.println(drawCount);
                 drawCount = 0;
                 timer = 0;
             }
@@ -73,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        bomber.update();
+        bomber.update(object, bomb);
         bomb.update(bomber);
     }
 
@@ -81,10 +82,9 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        tile.render(g2);
+        object.render(g2);
         bomber.render(g2);
         bomb.render(g2);
-        item.render(g2);
         g2.dispose();
     }
 }

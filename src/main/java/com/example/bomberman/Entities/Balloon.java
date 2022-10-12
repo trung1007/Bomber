@@ -7,12 +7,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Balloon extends Entity{
+public class Balloon {
     GamePanel gamePanel;
     BufferedImage right1, right2, right3, left1, left2, left3;
     public Balloon(GamePanel gamePanel){
         this.gamePanel = gamePanel;
-        direction = "RIGHT";
+//        direction = "RIGHT";
     }
     public void setBalloonImage(){
         try{
@@ -31,17 +31,17 @@ public class Balloon extends Entity{
 
     }
     public void render(Graphics2D g2){
-        BufferedImage image = null;
-        switch (direction){
-            case "RIGHT":{
-                image = right1;
-                break;
-            }
-            case "LEFT":{
-                image = left1;
-                break;
-            }
-        }
-        g2.drawImage(image, 100, 100,gamePanel.SCALED_SIZE, gamePanel.SCALED_SIZE, null);
+//        BufferedImage image = null;
+//        switch (direction){
+//            case "RIGHT":{
+//                image = right1;
+//                break;
+//            }
+//            case "LEFT":{
+//                image = left1;
+//                break;
+//            }
+//        }
+//        g2.drawImage(image, 100, 100,gamePanel.SCALED_SIZE, gamePanel.SCALED_SIZE, null);
     }
 }
