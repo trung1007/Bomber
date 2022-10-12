@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 
 public class Item {
     GamePanel gamePanel;
+
     public BufferedImage bombSize, bombs,speed;
     public boolean collision = false;
     public int worldX, worldY;
