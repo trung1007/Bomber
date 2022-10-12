@@ -15,11 +15,7 @@ public class Entity {
     public int bomberX, bomberY;
     public boolean collisionOn = false;
 
-
-
-
-
-
-
+    public int solidAreaDefaultX;
+    public int solidAreaDefaultY;
 
 }
