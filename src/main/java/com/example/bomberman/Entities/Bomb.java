@@ -8,16 +8,17 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Bomb extends Entity {
+public class Bomb {
     public int bombX;
     public int bombY;
-    public int intervalToExplore = 20; // thoi gian bom no
-    public int Exploring = 20;
-    int x=0;
+    public int intervalToExplored = 20; //  khoang thoi gian bom no
+    public int isExploring = 10; // khoang thoi gian ma bom dang no
+
+    int x,y;
     public double lasttime=(System.nanoTime()/1000000000)/1000;
 
     public boolean explored = true;
-    public boolean isExplored = false;
+    public boolean isExplored = false; // kiem tra xem bom da no hay chua
     public BufferedImage image = null;
     int countExplore = 0;
     BufferedImage center1, center2, center3, left1, left2, left3, right1, right2, right3, up1, up2, up3, down1, down2, down3, ver1, ver2, ver3, hor1, hor2, hor3;
@@ -28,6 +29,8 @@ public class Bomb extends Entity {
     Keyboard keyboard;
     public int rec = gamePanel.SCALED_SIZE;
 
+    int sizeBomb = 1;
+
     public Bomb(GamePanel gamePanel, Keyboard keyboard) {
         this.gamePanel = gamePanel;
         this.keyboard = keyboard;
@@ -35,8 +38,8 @@ public class Bomb extends Entity {
     }
 
     public Bomb() {
-    }
 
+    }
 
     public void getBombImage() {
         try {
@@ -73,11 +76,13 @@ public class Bomb extends Entity {
         }
     }
 
-    public void update(Bomberman bomberman) {
-        keyboard.update();
+    public void update(Bomber bomberman) {
+       /* keyboard.update();*/
         if (bomberman.keyboard.space) {
-            bombX = bomberman.bomberX;
-            bombY = bomberman.bomberY;
+            x = bomberman.bomberX ;
+            y = bomberman.bomberY ;
+            bombX = x;
+            bombY = y;
             explored = false;
         }
 
@@ -87,14 +92,14 @@ public class Bomb extends Entity {
 
         if (!explored) {
             if(!isExplored){
-                if (countTime <= intervalToExplore) {
+                if (countTime <= intervalToExplored) {
                     image = bom1;
-                } else if (countTime <= intervalToExplore * 2) {
+                } else if (countTime <= intervalToExplored * 2) {
                     image = bom2;
-                } else if (countTime <= intervalToExplore * 3) {
+                } else if (countTime <= intervalToExplored * 3) {
                     image = bom3;
                 }
-                if (countTime == intervalToExplore * 3) {
+                if (countTime == intervalToExplored * 3) {
                     isExplored = true;
                     image = null;
                     countTime = 0;
@@ -103,43 +108,55 @@ public class Bomb extends Entity {
             }
             countTime++;
             g2.drawImage(image, bombX, bombY, rec, rec, null);
+
+            //kiem tra bom no va load anh bom no
             if (isExplored) {
                 if(image==null){
-                    if (countTime <= Exploring) {
-                        g2.drawImage(center1,bombX,bombY,rec,rec,null);
-//                        g2.drawImage(ver1, bombX, bombY + rec, rec, rec, null);
-//                        g2.drawImage(ver1, bombX, bombY - rec, rec, rec, null);
-//                        g2.drawImage(hor1, bombX + rec, bombY, rec, rec, null);
-//                        g2.drawImage(hor1, bombX - rec, bombY, rec, rec, null);
-                        g2.drawImage(up1, bombX, bombY - rec, rec, rec, null);
-                        g2.drawImage(down1, bombX, bombY + rec, rec, rec, null);
-                        g2.drawImage(left1, bombX - rec, bombY, rec, rec, null);
-                        g2.drawImage(right1, bombX +  rec, bombY, rec, rec, null);
+                    if (countTime <= isExploring) {
+                        g2.drawImage(center1, bombX, bombY, rec, rec, null);
+                        for(int i = 1; i <= sizeBomb; i++) {
+                            g2.drawImage(ver1, bombX, bombY + i * rec, rec, rec, null);
+                            g2.drawImage(ver1, bombX, bombY - i * rec, rec, rec, null);
+                            g2.drawImage(hor1, bombX + i * rec, bombY, rec, rec, null);
+                            g2.drawImage(hor1, bombX - i * rec, bombY, rec, rec, null);
 
-                    } else if (countTime <= Exploring * 2) {
-                        g2.drawImage(center2,bombX,bombY,rec,rec,null);
-                        /*g2.drawImage(ver2, bombX, bombY + rec, rec, rec, null);
-                        g2.drawImage(ver2, bombX, bombY - rec, rec, rec, null);
-                        g2.drawImage(hor2, bombX + rec, bombY, rec, rec, null);
-                        g2.drawImage(hor2, bombX - rec, bombY, rec, rec, null);*/
-                        g2.drawImage(up2, bombX, bombY -  rec, rec, rec, null);
-                        g2.drawImage(down2, bombX, bombY + rec, rec, rec, null);
-                        g2.drawImage(left2, bombX -  rec, bombY, rec, rec, null);
-                        g2.drawImage(right2, bombX +  rec, bombY, rec, rec, null);
+                        }
+                        g2.drawImage(up1, bombX, bombY - sizeBomb * rec, rec, rec, null);
+                        g2.drawImage(down1, bombX, bombY + sizeBomb * rec, rec, rec, null);
+                        g2.drawImage(left1, bombX - sizeBomb * rec, bombY, rec, rec, null);
+                        g2.drawImage(right1, bombX + sizeBomb * rec, bombY, rec, rec, null);
 
-                    } else if (countTime <= Exploring * 3) {
+                    } else if (countTime <= isExploring * 2) {
+
+                        for(int i = 1; i <= sizeBomb; i++) {
+                            g2.drawImage(center2,bombX,bombY,rec,rec,null);
+                            g2.drawImage(ver2, bombX, bombY + i * rec, rec, rec, null);
+                            g2.drawImage(ver2, bombX, bombY - i * rec, rec, rec, null);
+                            g2.drawImage(hor2, bombX + i * rec, bombY, rec, rec, null);
+                            g2.drawImage(hor2, bombX - i * rec, bombY, rec, rec, null);
+
+                        }
+                        g2.drawImage(up2, bombX, bombY - sizeBomb * rec, rec, rec, null);
+                        g2.drawImage(down2, bombX, bombY + sizeBomb * rec, rec, rec, null);
+                        g2.drawImage(left2, bombX - sizeBomb * rec, bombY, rec, rec, null);
+                        g2.drawImage(right2, bombX + sizeBomb * rec, bombY, rec, rec, null);
+
+                    } else if (countTime <= isExploring * 3) {
                         g2.drawImage(center3,bombX,bombY,rec,rec,null);
-                        /*g2.drawImage(ver3, bombX, bombY + rec, rec, rec, null);
-                        g2.drawImage(ver3, bombX, bombY - rec, rec, rec, null);
-                        g2.drawImage(hor3, bombX + rec, bombY, rec, rec, null);
-                        g2.drawImage(hor3, bombX - rec, bombY, rec, rec, null);*/
-                        g2.drawImage(up3, bombX, bombY -  rec, rec, rec, null);
-                        g2.drawImage(down3, bombX, bombY +  rec, rec, rec, null);
-                        g2.drawImage(left3, bombX -  rec, bombY, rec, rec, null);
-                        g2.drawImage(right3, bombX +  rec, bombY, rec, rec, null);
+                        for(int i = 1; i <= sizeBomb; i++) {
+                            g2.drawImage(center2,bombX,bombY,rec,rec,null);
+                            g2.drawImage(ver3, bombX, bombY + i * rec, rec, rec, null);
+                            g2.drawImage(ver3, bombX, bombY - i * rec, rec, rec, null);
+                            g2.drawImage(hor3, bombX + i * rec, bombY, rec, rec, null);
+                            g2.drawImage(hor3, bombX - i * rec, bombY, rec, rec, null);
 
+                        }
+                        g2.drawImage(up3, bombX, bombY - sizeBomb * rec, rec, rec, null);
+                        g2.drawImage(down3, bombX, bombY + sizeBomb * rec, rec, rec, null);
+                        g2.drawImage(left3, bombX - sizeBomb * rec, bombY, rec, rec, null);
+                        g2.drawImage(right3, bombX + sizeBomb * rec, bombY, rec, rec, null);
                     }
-                    if (countTime == Exploring * 3) {
+                    if (countTime == isExploring * 3) {
                         explored=true;
                         isExplored = false;
                         countTime=0;
