@@ -34,25 +34,25 @@ public class Bomber extends Entity{
     }
 
     public void setDefaultValues(){
-        bomberX = 100;
-        bomberY = 100;
-        speed = 2;
+        X = 48;
+        Y = 48;
+        speed = 8;
     }
 
     public void getBomberImage(){
         try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up-1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up-2.png"));
-            up3 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up-3.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_down-1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_down-2.png"));
-            down3 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_down-3.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_left-1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_left-2.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_left-3.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_right-1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_right-2.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_right-3.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("/sprites/up-1.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("/sprites/up-2.png"));
+            up3 = ImageIO.read(getClass().getResourceAsStream("/sprites/up-3.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("/sprites/down-1.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("/sprites/down-2.png"));
+            down3 = ImageIO.read(getClass().getResourceAsStream("/sprites/down-3.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("/sprites/left-1.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("/sprites/left-2.png"));
+            left3 = ImageIO.read(getClass().getResourceAsStream("/sprites/left-3.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("/sprites/right-1.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("/sprites/right-2.png"));
+            right3 = ImageIO.read(getClass().getResourceAsStream("/sprites/right-3.png"));
 
            /* up1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up.png"));
             up2 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up_1.png"));
@@ -103,17 +103,17 @@ public class Bomber extends Entity{
             if(collisionOn == false) {
                 switch (direction){
                     case "UP": {
-                        bomberY -= speed;
-                        if(object.mapObjectNum[(bomberY)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE] == 5){
-                            object.mapObjectNum[(bomberY)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE] = 0;
+                        Y -= speed;
+                        if(object.mapObjectNum[(Y)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE] == 5){
+                            object.mapObjectNum[(Y)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE] = 0;
 //                            System.out.println("up");
                             bomb.sizeBomb++;
                         }
-                        if(object.mapObjectNum[bomberY/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 6){
-                            object.mapObjectNum[bomberY/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
+                        if(object.mapObjectNum[Y/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 6){
+                            object.mapObjectNum[Y/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
                         }
-                        if(object.mapObjectNum[bomberY/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 7){
-                            object.mapObjectNum[bomberY/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
+                        if(object.mapObjectNum[Y/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 7){
+                            object.mapObjectNum[Y/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
                             speed += 2;
                         }
                         /*System.out.println(bomberX);
@@ -124,17 +124,17 @@ public class Bomber extends Entity{
                         break;
                     }
                     case "DOWN": {
-                        bomberY += speed;
-                        if(object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE/2 )/gamePanel.SCALED_SIZE] == 5){
-                            object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE/2 )/gamePanel.SCALED_SIZE] = 0;
+                        Y += speed;
+                        if(object.mapObjectNum[(Y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE/2 )/gamePanel.SCALED_SIZE] == 5){
+                            object.mapObjectNum[(Y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE/2 )/gamePanel.SCALED_SIZE] = 0;
 //                            System.out.println("down");
                             bomb.sizeBomb++;
                         }
-                        if(object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 6){
-                            object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
+                        if(object.mapObjectNum[(Y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 6){
+                            object.mapObjectNum[(Y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
                         }
-                        if(object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 7){
-                            object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
+                        if(object.mapObjectNum[(Y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 7){
+                            object.mapObjectNum[(Y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
                             speed += 2;
                         }
 
@@ -147,33 +147,33 @@ public class Bomber extends Entity{
                         break;
                     }
                     case "LEFT": {
-                        bomberX -= speed;
-                        if(object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX)/gamePanel.SCALED_SIZE] == 5){
-                            object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX)/gamePanel.SCALED_SIZE] = 0;
+                        X -= speed;
+                        if(object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X)/gamePanel.SCALED_SIZE] == 5){
+                            object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X)/gamePanel.SCALED_SIZE] = 0;
 //                            System.out.println("left");
                             bomb.sizeBomb++;
                         }
-                        if(object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX)/gamePanel.SCALED_SIZE]== 6){
-                            object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX)/gamePanel.SCALED_SIZE] = 0;
+                        if(object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X)/gamePanel.SCALED_SIZE]== 6){
+                            object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X)/gamePanel.SCALED_SIZE] = 0;
                         }
-                        if(object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX)/gamePanel.SCALED_SIZE] == 7){
-                            object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX)/gamePanel.SCALED_SIZE] = 0;
+                        if(object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X)/gamePanel.SCALED_SIZE] == 7){
+                            object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X)/gamePanel.SCALED_SIZE] = 0;
                             speed += 2;;
                         }
                         break;
                     }
                     case "RIGHT": {
-                        bomberX += speed;
-                        if(object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] == 5){
-                            object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] = 0;
+                        X += speed;
+                        if(object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] == 5){
+                            object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] = 0;
 //                            System.out.println("right");
                             bomb.sizeBomb++;
                         }
-                        if(object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE]== 6){
-                            object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] = 0;
+                        if(object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE]== 6){
+                            object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] = 0;
                         }
-                        if(object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] == 7){
-                            object.mapObjectNum[(bomberY + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(bomberX + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] = 0;
+                        if(object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] == 7){
+                            object.mapObjectNum[(Y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(X + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] = 0;
                             speed += 2;
                         }
 
@@ -252,7 +252,7 @@ public class Bomber extends Entity{
                 break;
             }
         }
-        g2.drawImage(image, bomberX, bomberY, GamePanel.SCALED_SIZE, GamePanel.SCALED_SIZE, null);
+        g2.drawImage(image, X, Y, GamePanel.SCALED_SIZE, GamePanel.SCALED_SIZE, null);
     }
 
 }
