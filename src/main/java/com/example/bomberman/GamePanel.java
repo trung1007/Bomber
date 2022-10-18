@@ -25,7 +25,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Bomber bomber = new Bomber(this, keyboard);
     public Bomb bomb = new Bomb(this, keyboard);
-
     public Balloon balloon = new Balloon(this);
     Object object = new Object(this);
 
@@ -75,6 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         bomber.update(object, bomb);
+        //bomb_caoTrung.update(bomber);
         bomb.update(bomber);
     }
 
@@ -84,7 +84,8 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         object.render(g2);
         bomber.render(g2);
-        bomb.render(g2);
+        //bomb_caoTrung.render(g2);
+        bomb.render(g2,object);
         g2.dispose();
     }
 }

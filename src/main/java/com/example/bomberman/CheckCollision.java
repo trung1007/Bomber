@@ -10,15 +10,15 @@ public class CheckCollision {
     }
 
     public void checkTile(Entity entity) {
-        int entityLeftWorldX = entity.bomberX + entity.solidArea.x;
-        int entityRightWorldX = entity.bomberX + entity.solidArea.x + entity.solidArea.width;
-        int entityTopWorldY = entity.bomberY + entity.solidArea.y;
-        int entityBotWorldY = entity.bomberY + entity.solidArea.y + entity.solidArea.height;
+        int entityLeftWorldX = entity.X + entity.solidArea.x;
+        int entityRightWorldX = entity.X + entity.solidArea.x + entity.solidArea.width;
+        int entityTopWorldY = entity.Y + entity.solidArea.y;
+        int entityBotWorldY = entity.Y + entity.solidArea.y + entity.solidArea.height;
 
-        int entityLeftCol = entityLeftWorldX / gamePanel.SCALED_SIZE;
-        int entityRightCol = entityRightWorldX / gamePanel.SCALED_SIZE;
-        int entityTopRow = entityTopWorldY / gamePanel.SCALED_SIZE;
-        int entityBotRow = entityBotWorldY / gamePanel.SCALED_SIZE;
+        int entityLeftCol = entityLeftWorldX / GamePanel.SCALED_SIZE;
+        int entityRightCol = entityRightWorldX / GamePanel.SCALED_SIZE;
+        int entityTopRow = entityTopWorldY / GamePanel.SCALED_SIZE;
+        int entityBotRow = entityBotWorldY / GamePanel.SCALED_SIZE;
 
         int tileNum1, tileNum2;
         switch (entity.direction) {

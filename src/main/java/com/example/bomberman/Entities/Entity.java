@@ -12,7 +12,7 @@ public class Entity {
 
     public Rectangle solidArea;
 
-    public int bomberX, bomberY;
+    public int X, Y;
     public boolean collisionOn = false;
 
     public int solidAreaDefaultX;
