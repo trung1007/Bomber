@@ -1,6 +1,7 @@
 package com.example.bomberman;
 
-import com.example.bomberman.Entities.Entity;
+import com.example.bomberman.Entities.Bomb;
+import com.example.bomberman.Entities.Bomber;
 
 public class CheckCollision {
     GamePanel gamePanel;
@@ -9,11 +10,11 @@ public class CheckCollision {
         this.gamePanel = gamePanel;
     }
 
-    public void checkTile(Entity entity) {
-        int entityLeftWorldX = entity.X + entity.solidArea.x;
-        int entityRightWorldX = entity.X + entity.solidArea.x + entity.solidArea.width;
-        int entityTopWorldY = entity.Y + entity.solidArea.y;
-        int entityBotWorldY = entity.Y + entity.solidArea.y + entity.solidArea.height;
+    public void checkTile(Bomber bomber) {
+        int entityLeftWorldX = bomber.X + bomber.solidArea.x;
+        int entityRightWorldX = bomber.X + bomber.solidArea.x + bomber.solidArea.width;
+        int entityTopWorldY = bomber.Y + bomber.solidArea.y;
+        int entityBotWorldY = bomber.Y + bomber.solidArea.y + bomber.solidArea.height;
 
         int entityLeftCol = entityLeftWorldX / GamePanel.SCALED_SIZE;
         int entityRightCol = entityRightWorldX / GamePanel.SCALED_SIZE;
@@ -21,89 +22,96 @@ public class CheckCollision {
         int entityBotRow = entityBotWorldY / GamePanel.SCALED_SIZE;
 
         int tileNum1, tileNum2;
-        switch (entity.direction) {
+        switch (bomber.direction) {
             case "UP":
-                entityTopRow = (entityTopWorldY - entity.speed) / gamePanel.SCALED_SIZE;
+                entityTopRow = (entityTopWorldY - bomber.speed) / gamePanel.SCALED_SIZE;
                 tileNum1 = gamePanel.object.mapObjectNum[entityTopRow][entityLeftCol];
                 tileNum2 = gamePanel.object.mapObjectNum[entityTopRow][entityRightCol];
                 if (gamePanel.object.collision[tileNum1] == true || gamePanel.object.collision[tileNum2] == true) {
-                    entity.collisionOn = true;
+                    bomber.collisionOn = true;
                 }
                 break;
             case "DOWN":
-                entityBotRow = (entityBotWorldY + entity.speed) / gamePanel.SCALED_SIZE;
+                entityBotRow = (entityBotWorldY + bomber.speed) / gamePanel.SCALED_SIZE;
                 tileNum1 = gamePanel.object.mapObjectNum[entityBotRow][entityLeftCol];
                 tileNum2 = gamePanel.object.mapObjectNum[entityBotRow][entityRightCol];
 
                 if (gamePanel.object.collision[tileNum1] == true || gamePanel.object.collision[tileNum2] == true) {
-                    entity.collisionOn = true;
+                    bomber.collisionOn = true;
                 }
                 break;
             case "LEFT":
-                entityLeftCol = (entityLeftWorldX - entity.speed) / gamePanel.SCALED_SIZE;
+                entityLeftCol = (entityLeftWorldX - bomber.speed) / gamePanel.SCALED_SIZE;
                 tileNum1 = gamePanel.object.mapObjectNum[entityTopRow][entityLeftCol];
                 tileNum2 = gamePanel.object.mapObjectNum[entityBotRow][entityLeftCol];
                 System.out.println(entityLeftWorldX);
                 if (gamePanel.object.collision[tileNum1] == true || gamePanel.object.collision[tileNum2] == true) {
-                    entity.collisionOn = true;
+                    bomber.collisionOn = true;
                 }
                 break;
             case "RIGHT":
-                entityRightCol = (entityRightWorldX + entity.speed) / gamePanel.SCALED_SIZE;
+                entityRightCol = (entityRightWorldX + bomber.speed) / gamePanel.SCALED_SIZE;
                 tileNum1 = gamePanel.object.mapObjectNum[entityTopRow][entityRightCol];
                 tileNum2 = gamePanel.object.mapObjectNum[entityBotRow][entityRightCol];
 
                 if (gamePanel.object.collision[tileNum1] == true || gamePanel.object.collision[tileNum2] == true) {
-                    entity.collisionOn = true;
+                    bomber.collisionOn = true;
                 }
                 break;
         }
     }
-  /*  public int checkItem(Entity entity, boolean bomber){
-        int index = 999;
-        for(int i = 0; i < gamePanel.item.length; i++){
-            if(gamePanel.item[i] != null){
-                // set entity solid area
-                entity.solidArea.x = entity.bomberX + entity.solidArea.x;
-                entity.solidArea.y = entity.bomberY + entity.solidArea.y;
-                // set item solid area
-                gamePanel.item[i].solidArea.x = gamePanel.item[i].itemX + gamePanel.item[i].solidArea.x;
-                gamePanel.item[i].solidArea.y = gamePanel.item[i].itemY + gamePanel.item[i].solidArea.y;
 
-                switch (entity.direction){
-                    case "UP":
-                        entity.solidArea.y = entity.solidArea.y - entity.speed;
-                        if(entity.solidArea.intersects(gamePanel.item[i].solidArea)){
-                            System.out.println("up collision");
-                        }
-                        break;
-                    case "DOWN":
-                        entity.solidArea.y = entity.solidArea.y + entity.speed;
-                        if(entity.solidArea.intersects(gamePanel.item[i].solidArea)) {
-                            System.out.println("down collision");
-                        }
-                        break;
-                    case "LEFT":
-                        entity.solidArea.x = entity.solidArea.x - entity.speed;
-                        if(entity.solidArea.intersects(gamePanel.item[i].solidArea)) {
-                            System.out.println("left collision");
-                        }
-                        break;
-                    case "RIGHT":
-                        entity.solidArea.x = entity.solidArea.x + entity.speed;
-                        if(entity.solidArea.intersects(gamePanel.item[i].solidArea)) {
-                            System.out.println("right collision");
-                        }
-                        break;
-                }
-                entity.solidArea.x = entity.solidAreaDefaultX;
-                entity.solidArea.y = entity.solidAreaDefaultY;
-                gamePanel.item[i].solidArea.x = gamePanel.item[i].solidAreaDefaultX;
-                gamePanel.item[i].solidArea.y = gamePanel.item[i].solidAreaDefaultY;
-            }
+    public void checkFlameBomb(Bomb bomb, int i) {
+        bomb.collisionWallUp = false;
+        bomb.collisionWallDown = false;
+        bomb.collisionWallLeft = false;
+        bomb.collisionWallRight = false;
+
+        int row_bomb_up = (bomb.bombY - i * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
+        int row_bomb_down = (bomb.bombY + i * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
+        int col_bomb_right = (bomb.bombX + i * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
+        int col_bomb_left = (bomb.bombX - i * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
+
+        if (col_bomb_left < 0) {
+            col_bomb_left = 0;
         }
-
-        return index;
-
-    }*/
+        if (col_bomb_right >= GamePanel.MAX_SCREEN_COL) {
+            col_bomb_right = GamePanel.MAX_SCREEN_COL - 1;
+        }
+        if (row_bomb_up < 0) {
+            row_bomb_up = 0;
+        }
+        if (row_bomb_down >= GamePanel.MAX_SCREEN_ROW) {
+            row_bomb_down = GamePanel.MAX_SCREEN_ROW - 1;
+        }
+        // va cham tren
+        if (gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE] == 1) {
+            bomb.collisionWallUp = true;
+        }
+        if (gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE] == 2) {
+            bomb.collisionBrickUp = true;
+        }
+        // va cham duoi
+        if (gamePanel.object.mapObjectNum[row_bomb_down][(bomb.bombX) / GamePanel.SCALED_SIZE] == 1) {
+            bomb.collisionWallDown = true;
+        }
+        if (gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE] == 2) {
+            bomb.collisionBrickDown = true;
+        }
+        // va cham trai
+        if (gamePanel.object.mapObjectNum[(bomb.bombY) / GamePanel.SCALED_SIZE][col_bomb_left] == 1) {
+            bomb.collisionWallLeft = true;
+        }
+        if (gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE] == 2) {
+            bomb.collisionBrickLeft = true;
+        }
+        // va cham phai
+        if (gamePanel.object.mapObjectNum[(bomb.bombY) / GamePanel.SCALED_SIZE][col_bomb_right] == 1) {
+            bomb.collisionWallRight = true;
+        }
+        if (gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE] == 2) {
+            bomb.collisionBrickRight = true;
+        }
+    }
 }
+
