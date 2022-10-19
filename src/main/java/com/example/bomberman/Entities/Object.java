@@ -40,8 +40,10 @@ public class Object {
             collision[1] = true;
             object[2] = ImageIO.read(getClass().getResourceAsStream("/sprites/brickO-1 .png")); // brick
             collision[2] = true;
-            object[3] = ImageIO.read(getClass().getResourceAsStream("/sprites/brickO-1 .png")); // brick
+            object[3] = ImageIO.read(getClass().getResourceAsStream("/sprites/brickO-2.png")); // brick
             collision[3] = true;
+            object[4] = ImageIO.read(getClass().getResourceAsStream("/sprites/brickO-3.png")); // brick
+            collision[4] = true;
 
 
             //get item image

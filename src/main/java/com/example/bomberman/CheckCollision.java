@@ -67,6 +67,11 @@ public class CheckCollision {
         bomb.collisionWallLeft = false;
         bomb.collisionWallRight = false;
 
+        bomb.collisionBrickUp = false;
+        bomb.collisionBrickDown=false;
+        bomb.collisionBrickLeft = false;
+        bomb.collisionBrickRight = false;
+
         int row_bomb_up = (bomb.bombY - i * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
         int row_bomb_down = (bomb.bombY + i * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
         int col_bomb_right = (bomb.bombX + i * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
@@ -84,32 +89,36 @@ public class CheckCollision {
         if (row_bomb_down >= GamePanel.MAX_SCREEN_ROW) {
             row_bomb_down = GamePanel.MAX_SCREEN_ROW - 1;
         }
+        int CollisionUp = gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE];
+        int CollisionDown = gamePanel.object.mapObjectNum[row_bomb_down][(bomb.bombX) / GamePanel.SCALED_SIZE];
+        int CollisionLeft = gamePanel.object.mapObjectNum[(bomb.bombY) / GamePanel.SCALED_SIZE][col_bomb_left];
+        int CollisionRight = gamePanel.object.mapObjectNum[(bomb.bombY) / GamePanel.SCALED_SIZE][col_bomb_right];
         // va cham tren
-        if (gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE] == 1) {
+        if (CollisionUp == 1) {
             bomb.collisionWallUp = true;
         }
-        if (gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE] == 2) {
+        if (CollisionUp <= 4 && CollisionUp > 1) {
             bomb.collisionBrickUp = true;
         }
         // va cham duoi
-        if (gamePanel.object.mapObjectNum[row_bomb_down][(bomb.bombX) / GamePanel.SCALED_SIZE] == 1) {
+        if (CollisionDown == 1) {
             bomb.collisionWallDown = true;
         }
-        if (gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE] == 2) {
+        if (CollisionDown <= 4 && CollisionDown > 1) {
             bomb.collisionBrickDown = true;
         }
         // va cham trai
-        if (gamePanel.object.mapObjectNum[(bomb.bombY) / GamePanel.SCALED_SIZE][col_bomb_left] == 1) {
+        if (CollisionLeft == 1) {
             bomb.collisionWallLeft = true;
         }
-        if (gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE] == 2) {
+        if (CollisionLeft <= 4 && CollisionLeft > 1) {
             bomb.collisionBrickLeft = true;
         }
         // va cham phai
-        if (gamePanel.object.mapObjectNum[(bomb.bombY) / GamePanel.SCALED_SIZE][col_bomb_right] == 1) {
+        if (CollisionRight == 1) {
             bomb.collisionWallRight = true;
         }
-        if (gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE] == 2) {
+        if (CollisionRight <= 4 && CollisionRight > 1) {
             bomb.collisionBrickRight = true;
         }
     }
