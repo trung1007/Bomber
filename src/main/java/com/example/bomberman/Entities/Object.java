@@ -60,7 +60,7 @@ public class Object {
 //            item[2] = ImageIO.read(getClass().getResourceAsStream("/sprites/powerup_speed.png"));
 //
 
-
+// alo
         }catch (IOException e){
             e.printStackTrace();
         }
