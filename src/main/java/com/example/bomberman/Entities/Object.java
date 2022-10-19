@@ -12,11 +12,11 @@ import java.io.InputStreamReader;
 
 public class Object {
     GamePanel gamePanel;
-    public BufferedImage object[] = new BufferedImage[10];
+    public BufferedImage []object = new BufferedImage[10];
 
 //    public BufferedImage item[] = new BufferedImage[5];
-    public boolean collision[] = new boolean[10];
-    public int mapObjectNum[][];
+    public boolean []collision = new boolean[10];
+    public int [][]mapObjectNum;
 //    public int mapItemNum[][];
 
 //    public Bomb bomb;
@@ -49,6 +49,7 @@ public class Object {
             collision[6] = false;
             object[7] = ImageIO.read(getClass().getResourceAsStream("/sprites/powerup_speed.png"));//speed
             collision[7] = false;
+
 
 //            item[0] = ImageIO.read(getClass().getResourceAsStream("/sprites/powerup_bombpass.png"));
 //

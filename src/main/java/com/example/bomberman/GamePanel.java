@@ -3,11 +3,14 @@ package com.example.bomberman;
 import com.example.bomberman.Entities.*;
 import com.example.bomberman.Entities.Object;
 import com.example.bomberman.input.Keyboard;
+import com.example.bomberman.sound.Sound;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
+
+    //Screen
     public static final int DEFAULT_SIZE = 16;//16x16tile
     public static final int SCALE = 3;
     public static final int SCALED_SIZE = DEFAULT_SIZE * SCALE;// 48x48tile
@@ -20,16 +23,19 @@ public class GamePanel extends JPanel implements Runnable {
     public final double ns = 1000000000.0 / FPS;
     public double delta = 0;
     public double delta1 = 0;
-    Thread gameThread;
+
+    //System
     Keyboard keyboard = new Keyboard();
-
-    public Bomber bomber = new Bomber(this, keyboard);
-    public Bomb bomb = new Bomb(this, keyboard);
-
-    public Balloon balloon = new Balloon(this);
-    Object object = new Object(this);
-
+    Sound sound = new Sound();
     public CheckCollision checkCollision = new CheckCollision(this);
+    Thread gameThread;
+
+
+    //entity and object
+    public Bomber bomber = new Bomber(this, keyboard);
+    public Bomb bomb = new Bomb(this);
+    public Balloon balloon = new Balloon(this);
+    public Object object = new Object(this);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -84,8 +90,20 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         object.render(g2);
         bomber.render(g2);
-        bomb.render(g2);
+        bomb.render(g2, object);
         g2.dispose();
+    }
+    public void playMusic(int i){
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+    public void stopMusic(){
+        sound.stop();
+    }
+    public void playSE(int i){
+        sound.setFile(i);
+        sound.play();
     }
 }
 
