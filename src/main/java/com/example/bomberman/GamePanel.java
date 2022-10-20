@@ -3,6 +3,7 @@ package com.example.bomberman;
 import com.example.bomberman.Entities.*;
 import com.example.bomberman.Entities.Object;
 import com.example.bomberman.input.Keyboard;
+import com.example.bomberman.sound.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,9 +23,10 @@ public class GamePanel extends JPanel implements Runnable {
     public double delta1 = 0;
     Thread gameThread;
     Keyboard keyboard = new Keyboard();
+    Sound sound = new Sound();
 
     public Bomber bomber = new Bomber(this, keyboard);
-    public Bomb bomb = new Bomb(this, keyboard);
+    public Bomb bomb = new Bomb(this);
     public Balloon balloon = new Balloon(this);
     Object object = new Object(this);
 
@@ -46,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        playMusic(4);
         long timer = 0;
         long drawCount = 0;
 
@@ -84,9 +87,21 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         object.render(g2);
         bomber.render(g2);
-        //bomb_caoTrung.render(g2);
         bomb.render(g2,object);
         g2.dispose();
+    }
+
+    public void playMusic(int i){
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+    public void stopMusic(){
+        sound.stop();
+    }
+    public void playSE(int i){
+        sound.setFile(i);
+        sound.play();
     }
 }
 

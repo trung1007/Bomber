@@ -5,7 +5,7 @@ import com.example.bomberman.graphics.Sprites;
 import java.awt.*;
 
 
-public  class Entity {
+public class Entity {
 
     public int speed;
     public String direction;
