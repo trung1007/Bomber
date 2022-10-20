@@ -248,5 +248,20 @@ public class CheckCollision {
         }
 
     }
+    public void checkDie(Bomber bomber, Bomb bomb){
+        int entityLeftWorldX = bomber.X + bomber.solidArea.x;
+        int entityRightWorldX = bomber.X + bomber.solidArea.x + bomber.solidArea.width;
+        int entityTopWorldY = bomber.Y + bomber.solidArea.y;
+        int entityBotWorldY = bomber.Y + bomber.solidArea.y + bomber.solidArea.height;
+
+        int entityLeftCol = entityLeftWorldX / GamePanel.SCALED_SIZE;
+        int entityRightCol = entityRightWorldX / GamePanel.SCALED_SIZE;
+        int entityTopRow = entityTopWorldY / GamePanel.SCALED_SIZE;
+        int entityBotRow = entityBotWorldY / GamePanel.SCALED_SIZE;
+
+        /*gamePanel.object.mapObjectNum[entityTopRow][bomber.X / GamePanel.SCALED_SIZE] = 10;
+        gamePanel.object.mapObjectNum[entityBotRow][bomber.X / GamePanel.SCALED_SIZE]*/
+
+    }
 }
 
