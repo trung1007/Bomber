@@ -1,7 +1,5 @@
 package com.example.bomberman.Entities;
 
-import com.example.bomberman.graphics.Sprites;
-
 import java.awt.*;
 
 
@@ -12,7 +10,7 @@ public class Entity {
 
     public Rectangle solidArea;
 
-    public int X, Y;
+//    public int x, y;
     public boolean collisionOn = false;
 
     public int solidAreaDefaultX;

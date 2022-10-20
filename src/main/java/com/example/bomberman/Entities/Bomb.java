@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
 
-public class Bomb {
+public class Bomb{
     public int bombX;
     public int bombY;
     public int intervalToExplored = 20; //  khoang thoi gian bom no
@@ -77,8 +77,8 @@ public class Bomb {
     public void update(Bomber bomberman) {
         if (bomberman.keyboard.space && bomCount == 0) {
             gamePanel.playSE(1);
-            int row = (bomberman.Y + 24) / GamePanel.SCALED_SIZE * GamePanel.SCALED_SIZE;
-            int col = (bomberman.X + 24) / GamePanel.SCALED_SIZE * GamePanel.SCALED_SIZE;
+            int row = (bomberman.y + 24) / GamePanel.SCALED_SIZE * GamePanel.SCALED_SIZE;
+            int col = (bomberman.x + 24) / GamePanel.SCALED_SIZE * GamePanel.SCALED_SIZE;
             bombX = col;
             bombY = row;
             explored = false;
@@ -86,7 +86,7 @@ public class Bomb {
 
     }
 
-    public void render(Graphics2D g2, Object object) {
+    public void render(Graphics2D g2, Object object, Bomber bomber) {
         if (NumOfBomb < 1) {
             NumOfBomb = 1;
         }
@@ -122,6 +122,7 @@ public class Bomb {
                         g2.drawImage(center1, bombX, bombY, rect, rect, null);
                         for (int i = 1; i <= sizeBomb; i++) {
                             gamePanel.checkCollision.checkFlameBomb(this, i);
+                            gamePanel.checkCollision.checkDie(bomber, this);
                             if (collisionWallUp) {
                                 size_up = 0;
                             }else{
@@ -190,7 +191,7 @@ public class Bomb {
                                     object.mapObjectNum[(bombY - i * rect) / rect][bombX / rect] = 3;
                                 }
                             }
-                            if (collisionWallDown||collisionBrickDown) {
+                            if (collisionWallDown) {
                                 size_down = 0;
                                 /*if(collisionBrickDown){
                                     object.mapObjectNum[(bombY + i * rect) / rect][bombX / rect] = 3;
@@ -200,7 +201,7 @@ public class Bomb {
                                     object.mapObjectNum[(bombY + i * rect) / rect][bombX / rect] = 3;
                                 }
                             }
-                            if (collisionWallLeft||collisionBrickLeft) {
+                            if (collisionWallLeft) {
                                 size_left = 0;
                                 /*if(collisionBrickLeft){
                                     object.mapObjectNum[(bombY) / rect][(bombX-i*rect) / rect] = 3;
@@ -210,7 +211,7 @@ public class Bomb {
                                     object.mapObjectNum[(bombY) / rect][(bombX-i*rect) / rect] = 3;
                                 }
                             }
-                            if (collisionWallRight||collisionBrickRight) {
+                            if (collisionWallRight) {
                                 size_right = 0;
                                 /*if(collisionBrickRight){
                                     object.mapObjectNum[(bombY) / rect][(bombX+i*rect) / rect] = 3;
