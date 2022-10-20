@@ -42,7 +42,7 @@ public class Bomber extends Entity{
     public void setDefaultValues(){
         x = 48;
         y = 48;
-        speed = 8;
+        speed = 4;
     }
 
     public void getBomberImage(){
@@ -84,6 +84,7 @@ public class Bomber extends Entity{
         if(checkDie == true){
             x = 0;
             y = 0;
+
         }
         if(keyboard.right || keyboard.up ||
                 keyboard.down || keyboard.left ) {
