@@ -276,14 +276,14 @@ public class CheckCollision {
             }
             // left
             if((bomb.bombX / GamePanel.SCALED_SIZE) == entityLeftCol ){
-                if((bomb.bombY - i * GamePanel.SCALED_SIZE)/48 == entityBotRow || (bomb.bombX + i * GamePanel.SCALED_SIZE)/48 == entityTopRow){
+                if((bomb.bombY - i * GamePanel.SCALED_SIZE)/48 == entityBotRow || (bomb.bombY + i * GamePanel.SCALED_SIZE)/48 == entityTopRow){
                     bomber.checkDie = true;
                     System.out.println("Die left");
                 }
             }
             //right
             if((bomb.bombX / GamePanel.SCALED_SIZE) == entityRightCol ){
-                if((bomb.bombY - i * GamePanel.SCALED_SIZE)/48 == entityBotRow || (bomb.bombX + i * GamePanel.SCALED_SIZE)/48 == entityTopRow){
+                if((bomb.bombY - i * GamePanel.SCALED_SIZE)/48 == entityBotRow || (bomb.bombY + i * GamePanel.SCALED_SIZE)/48 == entityTopRow){
                     bomber.checkDie = true;
                     System.out.println("Die right");
                 }
