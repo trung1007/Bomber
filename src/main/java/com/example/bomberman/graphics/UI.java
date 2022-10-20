@@ -16,5 +16,6 @@ public class UI {
         g2.setColor(Color.red);
         g2.drawString("SizeBomb: " + gamePanel.bomb.sizeBomb, 20, 20 );
         g2.drawString("Speed: " + gamePanel.bomber.speed, 40, 40 );
+        //alo
     }
 }
