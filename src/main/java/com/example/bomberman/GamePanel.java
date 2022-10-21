@@ -20,11 +20,12 @@ public class GamePanel extends JPanel implements Runnable {
     public final double ns = 1000000000.0 / FPS;
     public double delta = 0;
     public double delta1 = 0;
+    public static int GameState=1;
     Thread gameThread;
     Keyboard keyboard = new Keyboard();
 
     public Bomber bomber = new Bomber(this, keyboard);
-    public Bomb bomb = new Bomb(this, keyboard);
+    public Bomb bomb = new Bomb(this);
     public Balloon balloon = new Balloon(this);
     Object object = new Object(this);
 
@@ -82,10 +83,11 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
         object.render(g2);
         bomber.render(g2);
         //bomb_caoTrung.render(g2);
-        bomb.render(g2,object);
+        bomb.render(g2,object,bomber);
         g2.dispose();
     }
 }
