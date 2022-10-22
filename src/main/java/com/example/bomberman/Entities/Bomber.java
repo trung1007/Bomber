@@ -31,8 +31,6 @@ public class Bomber extends Entity{
         solidArea = new Rectangle();
         solidArea.x = 10;
         solidArea.y = 10;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
         solidArea.width = 20;
         solidArea.height = 28;
 
@@ -47,7 +45,7 @@ public class Bomber extends Entity{
 
     public void getBomberImage(){
         try {
-            /*up1 = ImageIO.read(getClass().getResourceAsStream("/sprites/up-1.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("/sprites/up-1.png"));
             up2 = ImageIO.read(getClass().getResourceAsStream("/sprites/up-2.png"));
             up3 = ImageIO.read(getClass().getResourceAsStream("/sprites/up-3.png"));
             down1 = ImageIO.read(getClass().getResourceAsStream("/sprites/down-1.png"));
@@ -58,10 +56,10 @@ public class Bomber extends Entity{
             left3 = ImageIO.read(getClass().getResourceAsStream("/sprites/left-3.png"));
             right1 = ImageIO.read(getClass().getResourceAsStream("/sprites/right-1.png"));
             right2 = ImageIO.read(getClass().getResourceAsStream("/sprites/right-2.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("/sprites/right-3.png"));*/
+            right3 = ImageIO.read(getClass().getResourceAsStream("/sprites/right-3.png"));
 
 
-            up1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up.png"));
+           /* up1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up.png"));
             up2 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up_1.png"));
             up3 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up_2.png"));
             down1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_down.png"));
@@ -73,24 +71,23 @@ public class Bomber extends Entity{
             right1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_right.png"));
             right2 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_right_1.png"));
             right3 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_right_2.png"));
-
+*/
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public void update(Object object, Bomb bomb){
+    public void update(Object object, Boom bomb){
         keyboard.update();
         if(checkDie == true){
-            x = 0;
-            y = 0;
-
+            x = 48;
+            y = 48;
+            checkDie=false;
         }
         if(keyboard.right || keyboard.up ||
                 keyboard.down || keyboard.left ) {
             if(keyboard.up){
                 direction = "UP";
-
             }
             else if(keyboard.down){
                 direction = "DOWN"; 
@@ -104,11 +101,9 @@ public class Bomber extends Entity{
                 direction = "RIGHT";
 
             }
-
             //check tile collision
             collisionOn = false;
             gamePanel.checkCollision.checkTile(this);
-
 
             if(collisionOn == false) {
                 switch (direction){
@@ -116,7 +111,6 @@ public class Bomber extends Entity{
                         y -= speed;
                         if(object.mapObjectNum[(y)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE] == 5){
                             object.mapObjectNum[(y)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE] = 0;
-//                            System.out.println("up");
                             gamePanel.playSE(0);
                             bomb.sizeBomb++;
                         }
@@ -130,7 +124,6 @@ public class Bomber extends Entity{
                             gamePanel.playSE(0);
                             speed += 2;
                         }
-
                         break;
                     }
                     case "DOWN": {
@@ -150,8 +143,6 @@ public class Bomber extends Entity{
                             gamePanel.playSE(0);
                             speed += 2;
                         }
-
-
                         break;
                     }
                     case "LEFT": {
@@ -190,8 +181,6 @@ public class Bomber extends Entity{
                             gamePanel.playSE(0);
                             speed += 2;
                         }
-
-
                         break;
                     }
                 }
@@ -208,7 +197,6 @@ public class Bomber extends Entity{
                 spriteCounter = 0;
             }
         }
-
     }
 
     public void render (Graphics2D g2){

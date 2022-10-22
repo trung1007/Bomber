@@ -28,7 +28,10 @@ public class GamePanel extends JPanel implements Runnable {
     public UI ui = new UI(this);
 
     public Bomber bomber = new Bomber(this, keyboard);
-    public Bomb bomb = new Bomb(this);
+//    public Bomb bomb = new Bomb(this);
+    public Boom boom = new Boom(this);
+
+
     public Balloon balloon = new Balloon(this);
     Object object = new Object(this);
 
@@ -49,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
     @Override
     public void run() {
-        playMusic(4);
+        //playMusic(4);
         long timer = 0;
         long drawCount = 0;
 
@@ -77,9 +80,12 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        bomber.update(object, bomb);
+//        bomber.update(object, bomb);
+        bomber.update(object,boom);
         //bomb_caoTrung.update(bomber);
-        bomb.update(bomber);
+//        bomb.update(bomber);
+        boom.update(bomber);
+
     }
 
     @Override
@@ -88,8 +94,8 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         object.render(g2);
         bomber.render(g2);
-        bomb.render(g2,object, bomber);
-
+//        bomb.render(g2,object, bomber);
+        boom.render(g2);
         ui.draw(g2);
         g2.dispose();
     }

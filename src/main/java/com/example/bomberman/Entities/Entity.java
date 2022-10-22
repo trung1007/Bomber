@@ -10,10 +10,7 @@ public class Entity {
 
     public Rectangle solidArea;
 
-//    public int x, y;
+    public int x, y;
     public boolean collisionOn = false;
-
-    public int solidAreaDefaultX;
-    public int solidAreaDefaultY;
 
 }

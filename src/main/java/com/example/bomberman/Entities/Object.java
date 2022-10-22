@@ -15,17 +15,12 @@ public class Object {
     public String NameOfObject;
     public BufferedImage[] object = new BufferedImage[10];
 
-//    public BufferedImage item[] = new BufferedImage[5];
     public static boolean[] collision = new boolean[10];
     public static int[][] mapObjectNum;
-//    public int mapItemNum[][];
-
-
 
     public Object(GamePanel gamePanel){
         this.gamePanel = gamePanel;
         mapObjectNum = new int[GamePanel.MAX_SCREEN_ROW][GamePanel.MAX_SCREEN_COL];
-//        mapItemNum = new int[gamePanel.MAX_SCREEN_COL][gamePanel.MAX_SCREEN_ROW];
         getObjectImage();
         loadMap();
     }
@@ -38,10 +33,12 @@ public class Object {
             collision[0] = false;
             object[1] = ImageIO.read(getClass().getResourceAsStream("/sprites/wall.png")); // wall
             collision[1] = true;
-            object[2] = ImageIO.read(getClass().getResourceAsStream("/sprites/boom22-1.png (1).png")); // brick
+            object[2] = ImageIO.read(getClass().getResourceAsStream("/sprites/brickO-1 .png")); // brick
             collision[2] = true;
-            object[3] = ImageIO.read(getClass().getResourceAsStream("/sprites/boom22-1.png (1).png")); // brick
+            object[3] = ImageIO.read(getClass().getResourceAsStream("/sprites/brickO-2.png")); // brick
             collision[3] = true;
+            object[4] = ImageIO.read(getClass().getResourceAsStream("/sprites/brickO-3.png")); // brick
+            collision[4] = true;
 
 
             //get item image
