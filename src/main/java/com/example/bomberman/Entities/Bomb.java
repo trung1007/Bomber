@@ -13,6 +13,7 @@ public class Bomb {
     public int bombY;
     public int intervalToExplored = 20; //  khoang thoi gian bom no
     public int timeExploring = 20; // khoang thoi gian ma bom dang no
+    public BufferedImage image = null;
     int NumOfBomb = 1;
     int[] NumOfItem = {0,0,0,0,0,0,0,5,6,7};
     public boolean collisionWallUp, collisionWallDown, collisionWallLeft, collisionWallRight;
@@ -20,7 +21,7 @@ public class Bomb {
     public boolean collisionBrickUp, collisionBrickDown, collisionBrickLeft, collisionBrickRight;
     public boolean explored = true;
     public boolean isExploring = false; // kiem tra xem bom da no hay chua
-    public BufferedImage image = null;
+
     BufferedImage center1, center2, center3, left1, left2, left3, right1, right2, right3, up1, up2, up3, down1, down2, down3, ver1, ver2, ver3, hor1, hor2, hor3;
     int countTime = 0;
     int bomCount = 0;
@@ -63,7 +64,7 @@ public class Bomb {
             right2 = ImageIO.read(getClass().getResourceAsStream("/sprites/right-last-2.png"));
             left2 = ImageIO.read(getClass().getResourceAsStream("/sprites/left-last-2.png"));
 
-            center3 = ImageIO.read(getClass().getResourceAsStream("/sprites/center-3.2.png"));
+            center3 = ImageIO.read(getClass().getResourceAsStream("/sprites/center-3.png"));
             ver3 = ImageIO.read(getClass().getResourceAsStream("/sprites/vertical-3.png"));
             hor3 = ImageIO.read(getClass().getResourceAsStream("/sprites/horizontal-3.png"));
             up3 = ImageIO.read(getClass().getResourceAsStream("/sprites/up-last-3.png"));
@@ -93,6 +94,7 @@ public class Bomb {
         }
         if (NumOfBomb >= 1) {
             if (!explored) {
+
                 if (!isExploring) {
                     if (countTime <= intervalToExplored) {
                         image = bom1;
@@ -127,7 +129,7 @@ public class Bomb {
                     if (countTime <= timeExploring) {
                         g2.drawImage(center1, bombX, bombY, rect, rect, null);
                         for (int i = 1; i <= sizeBomb; i++) {
-                            gamePanel.checkCollision.checkFlameBomb(this, i);
+//                            gamePanel.checkCollision.checkFlameBomb(this, i);
                             if (collisionWallUp || collisionBrickUp) {
                                 size_up = 0;
                                 if(collisionWallUp){
@@ -181,7 +183,7 @@ public class Bomb {
                     } else if (countTime <= timeExploring * 2) {
                         g2.drawImage(center2, bombX, bombY, rect, rect, null);
                         for (int i = 1; i <= sizeBomb; i++) {
-                            gamePanel.checkCollision.checkFlameBomb(this, i);
+//                            gamePanel.checkCollision.checkFlameBomb(this, i);
                             if (collisionWallUp || collisionBrickUp) {
                                 size_up = 0;
                                 if(collisionWallUp){
@@ -233,7 +235,7 @@ public class Bomb {
                     } else if (countTime <= timeExploring * 3) {
                         g2.drawImage(center3, bombX, bombY, rect, rect, null);
                         for (int i = 1; i <= sizeBomb; i++) {
-                            gamePanel.checkCollision.checkFlameBomb(this, i);
+//                            gamePanel.checkCollision.checkFlameBomb(this, i);
                             if (collisionWallUp || collisionBrickUp) {
                                 size_up = 0;
                                 if(collisionWallUp){
