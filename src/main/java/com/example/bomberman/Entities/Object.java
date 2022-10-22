@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class Object {
+public class Object extends Entity {
     GamePanel gamePanel;
     public String NameOfObject;
     public BufferedImage[] object = new BufferedImage[10];
@@ -34,15 +34,15 @@ public class Object {
 
             //get tile image
 
-            object[0] = ImageIO.read(getClass().getResourceAsStream("/sprites/grass.png"));// grass
+            object[0] = ImageIO.read(getClass().getResourceAsStream("/sprites/grass@2.png"));// grass
             collision[0] = false;
             object[1] = ImageIO.read(getClass().getResourceAsStream("/sprites/wall.png")); // wall
             collision[1] = true;
-            object[2] = ImageIO.read(getClass().getResourceAsStream("/sprites/brickO-1 .png")); // brick
+            object[2] = ImageIO.read(getClass().getResourceAsStream("/sprites/brick@1.png")); // brick
             collision[2] = true;
-            object[3] = ImageIO.read(getClass().getResourceAsStream("/sprites/brickO-2.png")); // brick
+            object[3] = ImageIO.read(getClass().getResourceAsStream("/sprites/brick_explosion@2.png")); // brick
             collision[3] = true;
-            object[4] = ImageIO.read(getClass().getResourceAsStream("/sprites/brickO-3.png")); // brick
+            object[4] = ImageIO.read(getClass().getResourceAsStream("/sprites/brick_explosion@3.png")); // brick
             collision[4] = true;
 
 

@@ -2,12 +2,20 @@ package com.example.bomberman;
 
 import com.example.bomberman.Entities.Bomb;
 import com.example.bomberman.Entities.Bomber;
+import com.example.bomberman.Entities.Boom;
+
+import java.util.Random;
 
 public class CheckCollision {
     GamePanel gamePanel;
+    int[] RandomItem = {0, 0, 0, 0, 0, 0, 0, 5, 6, 7};
 
     public CheckCollision(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+    }
+    public int RandomNumOfObject(int[] Num) {
+        Random random = new Random();
+        return Num[random.nextInt(Num.length - 1)];
     }
 
     public void checkTile(Bomber bomber) {
@@ -61,95 +69,97 @@ public class CheckCollision {
         }
     }
 
-    public void checkFlameBomb(Bomb bomb, int i) {
-        bomb.collisionWallUp = false;
-        bomb.collisionWallDown = false;
-        bomb.collisionWallLeft = false;
-        bomb.collisionWallRight = false;
 
-        bomb.collisionBrickUp = false;
-        bomb.collisionBrickDown=false;
-        bomb.collisionBrickLeft = false;
-        bomb.collisionBrickRight = false;
-
-        int x=0;
-
-
-        int row_bomb_up = (bomb.bombY - i * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
-        int row_bomb_down = (bomb.bombY + i * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
-        int col_bomb_right = (bomb.bombX + i * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
-        int col_bomb_left = (bomb.bombX - i * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
-
-        if (col_bomb_left < 0) {
-            col_bomb_left = 0;
+    public void checkFlameBomb(Boom boom, int countTime, int timeExploring) {
+        if(countTime <= timeExploring){
+            if(boom.frameUp < boom.sizeBomb){
+                if(gamePanel.object.mapObjectNum[boom.y/48 - boom.frameUp -1][boom.x/48] == 2){
+                    gamePanel.object.mapObjectNum[boom.y/48 - boom.frameUp -1][boom.x/48] = 3;
+                }
+            }
+            if(boom.frameDown < boom.sizeBomb){
+                if(gamePanel.object.mapObjectNum[boom.y/48 + boom.frameDown +1][boom.x/48] == 2){
+                    gamePanel.object.mapObjectNum[boom.y/48 + boom.frameDown +1][boom.x/48] = 3;
+                }
+            }
+            if(boom.frameLeft < boom.sizeBomb){
+                if(gamePanel.object.mapObjectNum[boom.y/48 ][boom.x/48 - boom.frameLeft - 1] == 2){
+                    gamePanel.object.mapObjectNum[boom.y/48 ][boom.x/48 - boom.frameLeft - 1] = 3;
+                }
+            }
+            if(boom.frameRight < boom.sizeBomb){
+                if(gamePanel.object.mapObjectNum[boom.y/48 ][boom.x/48 + boom.frameRight +1] == 2){
+                    gamePanel.object.mapObjectNum[boom.y/48 ][boom.x/48 + boom.frameRight +1] = 3;
+                }
+            }
+        }else if(countTime <= timeExploring * 2) {
+            if(boom.frameUp < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] == 3) {
+                    gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] = 3;
+                }
+            }
+            if (boom.frameDown < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48 + boom.frameDown + 1][boom.x / 48] == 3) {
+                    gamePanel.object.mapObjectNum[boom.y / 48 + boom.frameDown + 1][boom.x / 48] = 3;
+                }
+            }
+            if (boom.frameLeft < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 - boom.frameLeft - 1] == 3) {
+                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 - boom.frameLeft - 1] = 3;
+                }
+            }
+            if (boom.frameRight < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] == 3) {
+                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] = 4;
+                }
+            }
+        } else if(countTime < timeExploring * 3){
+            if(boom.frameUp < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] == 3) {
+                    gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] = 4;
+                }
+            }
+            if (boom.frameDown < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48 + boom.frameDown + 1][boom.x / 48] == 3) {
+                    gamePanel.object.mapObjectNum[boom.y / 48 + boom.frameDown + 1][boom.x / 48] = 4;
+                }
+            }
+            if (boom.frameLeft < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 - boom.frameLeft - 1] == 3) {
+                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 - boom.frameLeft - 1] = 4;
+                }
+            }
+            if (boom.frameRight < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] == 3) {
+                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] = 4;
+                }
+            }
+        } else if (countTime == 20 * 3) {
+            if(boom.frameUp < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] == 4) {
+                    int random = RandomNumOfObject(RandomItem);
+                    gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] = random;
+                }
+            }
+            if (boom.frameDown < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48 + boom.frameDown + 1][boom.x / 48] == 4) {
+                    int random = RandomNumOfObject(RandomItem);
+                    gamePanel.object.mapObjectNum[boom.y / 48 + boom.frameDown + 1][boom.x / 48] = random;
+                }
+            }
+            if (boom.frameLeft < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 - boom.frameLeft - 1] == 4) {
+                    int random = RandomNumOfObject(RandomItem);
+                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 - boom.frameLeft - 1] = random;
+                }
+            }
+            if (boom.frameRight < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] == 4) {
+                    int random = RandomNumOfObject(RandomItem);
+                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] = random;
+                }
+            }
         }
-        if (col_bomb_right >= GamePanel.MAX_SCREEN_COL) {
-            col_bomb_right = GamePanel.MAX_SCREEN_COL - 1;
-        }
-        if (row_bomb_up < 0) {
-            row_bomb_up = 0;
-        }
-        if (row_bomb_down >= GamePanel.MAX_SCREEN_ROW) {
-            row_bomb_down = GamePanel.MAX_SCREEN_ROW - 1;
-        }
-        int CollisionUp = gamePanel.object.mapObjectNum[row_bomb_up][(bomb.bombX) / GamePanel.SCALED_SIZE];
-        int CollisionDown = gamePanel.object.mapObjectNum[row_bomb_down][(bomb.bombX) / GamePanel.SCALED_SIZE];
-        int CollisionLeft = gamePanel.object.mapObjectNum[(bomb.bombY) / GamePanel.SCALED_SIZE][col_bomb_left];
-        int CollisionRight = gamePanel.object.mapObjectNum[(bomb.bombY) / GamePanel.SCALED_SIZE][col_bomb_right];
-        // va cham tren
-        if (CollisionUp == 1) {
-            bomb.collisionWallUp = true;
-            x=i;
-        }
-        if (CollisionUp <= 4 && CollisionUp > 1) {
-            bomb.collisionBrickUp = true;
-        }
-        // va cham duoi
-        if (CollisionDown == 1) {
-            bomb.collisionWallDown = true;
-            x=i;
-        }
-        if (CollisionDown <= 4 && CollisionDown > 1) {
-            bomb.collisionBrickDown = true;
-        }
-        // va cham trai
-        if (CollisionLeft == 1) {
-            bomb.collisionWallLeft = true;
-            x=i;
-        }
-        if (CollisionLeft <= 4 && CollisionLeft > 1) {
-            bomb.collisionBrickLeft = true;
-        }
-        // va cham phai
-        if (CollisionRight == 1) {
-            bomb.collisionWallRight = true;
-            x=i;
-        }
-        if (CollisionRight <= 4 && CollisionRight > 1) {
-            bomb.collisionBrickRight = true;
-        }
-//        for(int j=1;j<=x;j++){
-//            int row_bomb_brick_up = (bomb.bombY - j * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
-//            int row_bomb_brick_down = (bomb.bombY + j * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
-//            int col_bomb_brick_right = (bomb.bombX + j * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
-//            int col_bomb_brick_left = (bomb.bombX - j * GamePanel.SCALED_SIZE) / GamePanel.SCALED_SIZE;
-//            int CollisionOfBrickUp=gamePanel.object.mapObjectNum[row_bomb_brick_up][(bomb.bombX) / GamePanel.SCALED_SIZE];
-//            int CollisionOfBrickDown=gamePanel.object.mapObjectNum[row_bomb_brick_down][(bomb.bombX) / GamePanel.SCALED_SIZE];
-//            int CollisionOfBrickLeft=gamePanel.object.mapObjectNum[bomb.bombY][(col_bomb_brick_left) / GamePanel.SCALED_SIZE];
-//            int CollisionOfBrickRight=gamePanel.object.mapObjectNum[bomb.bombY][(col_bomb_brick_right) / GamePanel.SCALED_SIZE];
-//            if(CollisionOfBrickUp<=4){
-//                bomb.collisionBrickUp = true;
-//            }
-//            if(CollisionOfBrickDown<=4){
-//                bomb.collisionBrickDown = true;
-//            }
-//            if(CollisionOfBrickLeft<=4){
-//                bomb.collisionBrickLeft = true;
-//            }
-//            if(CollisionOfBrickRight<=4){
-//                bomb.collisionBrickRight = true;
-//            }
-//        }
     }
     public void checkDie(Bomber bomber, Bomb bomb){
         int entityLeftWorldX = bomber.x + bomber.solidArea.x;

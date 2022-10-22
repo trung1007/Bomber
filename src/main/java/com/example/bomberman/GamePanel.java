@@ -2,7 +2,9 @@ package com.example.bomberman;
 
 import com.example.bomberman.Entities.*;
 import com.example.bomberman.Entities.Object;
+import com.example.bomberman.Menu.MenuUI;
 import com.example.bomberman.input.Keyboard;
+import com.example.bomberman.input.Mouse;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,19 +17,23 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int MAX_SCREEN_ROW = 12;
     public static final int SCREEN_WIDTH = SCALED_SIZE * MAX_SCREEN_COL; // 768 pixel
     public static final int SCREEN_HEIGHT = SCALED_SIZE * MAX_SCREEN_ROW; //576 pixel
+    Graphics2D g2;
     int FPS = 60;
     public long lastTime = System.nanoTime();
     public final double ns = 1000000000.0 / FPS;
     public double delta = 0;
     public double delta1 = 0;
-    public static int GameState=1;
-    Thread gameThread;
+    public static int GameState=0;
+    public static Thread gameThread;
     Keyboard keyboard = new Keyboard();
+    Mouse mouse=new Mouse(this);
 
     public Bomber bomber = new Bomber(this, keyboard);
     public Bomb bomb = new Bomb(this);
+    public Boom boom=new Boom(this);
     public Balloon balloon = new Balloon(this);
     Object object = new Object(this);
+    MenuUI menuUI = new MenuUI(this,mouse);
 
     public CheckCollision checkCollision = new CheckCollision(this);
 
@@ -35,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyboard);
+        this.addMouseListener(mouse);
         this.setFocusable(true);
 
     }
@@ -74,20 +81,26 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        bomber.update(object, bomb);
+        bomber.update(object, boom);
         //bomb_caoTrung.update(bomber);
-        bomb.update(bomber);
+        //bomb.update(bomber);
+        boom.update(bomber);
+        menuUI.update();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-
-        object.render(g2);
-        bomber.render(g2);
-        //bomb_caoTrung.render(g2);
-        bomb.render(g2,object,bomber);
+        if(GamePanel.GameState==0){
+            object.render(g2);
+            bomber.render(g2);
+            //bomb.render(g2,object,bomber);
+            boom.render(g2);
+        }
+        if(GamePanel.GameState==1){
+            menuUI.render(g2);
+        }
         g2.dispose();
     }
 }
