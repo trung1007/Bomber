@@ -15,12 +15,17 @@ public class Object extends Entity {
     public String NameOfObject;
     public BufferedImage[] object = new BufferedImage[10];
 
+//    public BufferedImage item[] = new BufferedImage[5];
     public static boolean[] collision = new boolean[10];
     public static int[][] mapObjectNum;
+//    public int mapItemNum[][];
+
+
 
     public Object(GamePanel gamePanel){
         this.gamePanel = gamePanel;
         mapObjectNum = new int[GamePanel.MAX_SCREEN_ROW][GamePanel.MAX_SCREEN_COL];
+//        mapItemNum = new int[gamePanel.MAX_SCREEN_COL][gamePanel.MAX_SCREEN_ROW];
         getObjectImage();
         loadMap();
     }

@@ -1,6 +1,5 @@
 package com.example.bomberman;
 
-import com.example.bomberman.Entities.Bomb;
 import com.example.bomberman.Entities.Bomber;
 import com.example.bomberman.Entities.Boom;
 
@@ -8,11 +7,15 @@ import java.util.Random;
 
 public class CheckCollision {
     GamePanel gamePanel;
-
     int[] RandomItem = {0, 0, 0, 0, 0, 0, 0, 5, 6, 7};
 
     public CheckCollision(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+    }
+
+    public int RandomNumOfObject(int[] Num) {
+        Random random = new Random();
+        return Num[random.nextInt(Num.length - 1)];
     }
 
     public void checkTile(Bomber bomber) {
@@ -66,34 +69,31 @@ public class CheckCollision {
         }
     }
 
-    public int RandomNumOfObject(int[] Num) {
-        Random random = new Random();
-        return Num[random.nextInt(Num.length - 1)];
-    }
+
     public void checkFlameBomb(Boom boom, int countTime, int timeExploring) {
-        if(countTime <= timeExploring){
-            if(boom.frameUp < boom.sizeBomb){
-                if(gamePanel.object.mapObjectNum[boom.y/48 - boom.frameUp -1][boom.x/48] == 2){
-                    gamePanel.object.mapObjectNum[boom.y/48 - boom.frameUp -1][boom.x/48] = 3;
+        if (countTime <= timeExploring) {
+            if (boom.frameUp < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] == 2) {
+                    gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] = 3;
                 }
             }
-            if(boom.frameDown < boom.sizeBomb){
-                if(gamePanel.object.mapObjectNum[boom.y/48 + boom.frameDown +1][boom.x/48] == 2){
-                    gamePanel.object.mapObjectNum[boom.y/48 + boom.frameDown +1][boom.x/48] = 3;
+            if (boom.frameDown < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48 + boom.frameDown + 1][boom.x / 48] == 2) {
+                    gamePanel.object.mapObjectNum[boom.y / 48 + boom.frameDown + 1][boom.x / 48] = 3;
                 }
             }
-            if(boom.frameLeft < boom.sizeBomb){
-                if(gamePanel.object.mapObjectNum[boom.y/48 ][boom.x/48 - boom.frameLeft - 1] == 2){
-                    gamePanel.object.mapObjectNum[boom.y/48 ][boom.x/48 - boom.frameLeft - 1] = 3;
+            if (boom.frameLeft < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 - boom.frameLeft - 1] == 2) {
+                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 - boom.frameLeft - 1] = 3;
                 }
             }
-            if(boom.frameRight < boom.sizeBomb){
-                if(gamePanel.object.mapObjectNum[boom.y/48 ][boom.x/48 + boom.frameRight +1] == 2){
-                    gamePanel.object.mapObjectNum[boom.y/48 ][boom.x/48 + boom.frameRight +1] = 3;
+            if (boom.frameRight < boom.sizeBomb) {
+                if (gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] == 2) {
+                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] = 3;
                 }
             }
-        }else if(countTime <= timeExploring * 2) {
-            if(boom.frameUp < boom.sizeBomb) {
+        } else if (countTime <= timeExploring * 2) {
+            if (boom.frameUp < boom.sizeBomb) {
                 if (gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] == 3) {
                     gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] = 3;
                 }
@@ -113,8 +113,8 @@ public class CheckCollision {
                     gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] = 4;
                 }
             }
-        } else if(countTime < timeExploring * 3){
-            if(boom.frameUp < boom.sizeBomb) {
+        } else if (countTime < timeExploring * 3) {
+            if (boom.frameUp < boom.sizeBomb) {
                 if (gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] == 3) {
                     gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] = 4;
                 }
@@ -135,7 +135,7 @@ public class CheckCollision {
                 }
             }
         } else if (countTime == 20 * 3) {
-            if(boom.frameUp < boom.sizeBomb) {
+            if (boom.frameUp < boom.sizeBomb) {
                 if (gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] == 4) {
                     int random = RandomNumOfObject(RandomItem);
                     gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] = random;
@@ -161,51 +161,8 @@ public class CheckCollision {
             }
         }
     }
-    public void checkDie(Bomber bomber, Bomb bomb){
-        int entityLeftWorldX = bomber.x + bomber.solidArea.x;
-        int entityRightWorldX = bomber.x + bomber.solidArea.x + bomber.solidArea.width;
-        int entityTopWorldY = bomber.y + bomber.solidArea.y;
-        int entityBotWorldY = bomber.y + bomber.solidArea.y + bomber.solidArea.height;
 
-        int entityLeftCol = entityLeftWorldX / GamePanel.SCALED_SIZE;
-        int entityRightCol = entityRightWorldX / GamePanel.SCALED_SIZE;
-        int entityTopRow = entityTopWorldY / GamePanel.SCALED_SIZE;
-        int entityBotRow = entityBotWorldY / GamePanel.SCALED_SIZE;
-
-        for(int i = 0; i <= bomb.sizeBomb; i++){
-            //up
-            if((bomb.bombY / GamePanel.SCALED_SIZE) == entityTopRow){
-                if((bomb.bombX + i * GamePanel.SCALED_SIZE)/48 == entityLeftCol || (bomb.bombX - i * GamePanel.SCALED_SIZE)/48 == entityRightCol ){
-                    bomber.checkDie = true;
-                    System.out.println("Die Up");
-                }
-            }
-            //down
-            if((bomb.bombY / GamePanel.SCALED_SIZE) == entityBotRow){
-                if((bomb.bombX + i * GamePanel.SCALED_SIZE)/48 == entityLeftCol || (bomb.bombX - i * GamePanel.SCALED_SIZE)/48 == entityRightCol ){
-                    bomber.checkDie = true;
-                    System.out.println("Die Down");
-                }
-            }
-            // left
-            if((bomb.bombX / GamePanel.SCALED_SIZE) == entityLeftCol){
-
-
-                if((bomb.bombY - i * GamePanel.SCALED_SIZE)/48 == entityBotRow || (bomb.bombY + i * GamePanel.SCALED_SIZE)/48 == entityTopRow){
-                    bomber.checkDie = true;
-                    System.out.println("Die left");
-                }
-            }
-            //right
-            if((bomb.bombX / GamePanel.SCALED_SIZE) == entityRightCol ){
-                if((bomb.bombY - i * GamePanel.SCALED_SIZE)/48 == entityBotRow || (bomb.bombY + i * GamePanel.SCALED_SIZE)/48 == entityTopRow){
-                    bomber.checkDie = true;
-                    System.out.println("Die right");
-                }
-            }
-        }
-    }
-    public void checkDie(Bomber bomber, Bomb bomb){
+    /*public void checkDie(Bomber bomber, Bomb bomb){
         int entityLeftWorldX = bomber.x + bomber.solidArea.x;
         int entityRightWorldX = bomber.x + bomber.solidArea.x + bomber.solidArea.width;
         int entityTopWorldY = bomber.y + bomber.solidArea.y;
@@ -220,33 +177,80 @@ public class CheckCollision {
             //up
             if((bomb.bombY / GamePanel.SCALED_SIZE) == entityTopRow ){
                 if((bomb.bombX + i * GamePanel.SCALED_SIZE)/48 == entityLeftCol || (bomb.bombX - i * GamePanel.SCALED_SIZE)/48 == entityRightCol ){
-                    bomber.checkDie = true;
+                    bomber.CheckDie = true;
                     System.out.println("Die Up");
                 }
             }
             //down
             if((bomb.bombY / GamePanel.SCALED_SIZE) == entityBotRow ){
                 if((bomb.bombX + i * GamePanel.SCALED_SIZE)/48 == entityLeftCol || (bomb.bombX - i * GamePanel.SCALED_SIZE)/48 == entityRightCol ){
-                    bomber.checkDie = true;
+                    bomber.CheckDie = true;
                     System.out.println("Die Down");
                 }
             }
             // left
             if((bomb.bombX / GamePanel.SCALED_SIZE) == entityLeftCol ){
                 if((bomb.bombY - i * GamePanel.SCALED_SIZE)/48 == entityBotRow || (bomb.bombY + i * GamePanel.SCALED_SIZE)/48 == entityTopRow){
-                    bomber.checkDie = true;
+                    bomber.CheckDie = true;
                     System.out.println("Die left");
                 }
             }
             //right
             if((bomb.bombX / GamePanel.SCALED_SIZE) == entityRightCol ){
                 if((bomb.bombY - i * GamePanel.SCALED_SIZE)/48 == entityBotRow || (bomb.bombY + i * GamePanel.SCALED_SIZE)/48 == entityTopRow){
-                    bomber.checkDie = true;
+                    bomber.CheckDie = true;
                     System.out.println("Die right");
                 }
             }
         }
+    }*/
+    public void checkDie(Bomber bomber, Boom boom) {
+        int entityLeftWorldX = bomber.x + bomber.solidArea.x;
+        int entityRightWorldX = bomber.x + bomber.solidArea.x + bomber.solidArea.width;
+        int entityTopWorldY = bomber.y + bomber.solidArea.y;
+        int entityBotWorldY = bomber.y + bomber.solidArea.y + bomber.solidArea.height;
 
+        int entityLeftCol = entityLeftWorldX / GamePanel.SCALED_SIZE;
+        int entityRightCol = entityRightWorldX / GamePanel.SCALED_SIZE;
+        int entityTopRow = entityTopWorldY / GamePanel.SCALED_SIZE;
+        int entityBotRow = entityBotWorldY / GamePanel.SCALED_SIZE;
+
+        //up
+        for (int i = 0; i <= boom.frameUp; i++) {
+            if (boom.x / GamePanel.SCALED_SIZE == entityRightCol || boom.x / GamePanel.SCALED_SIZE == entityLeftCol) {
+                if ((boom.y - i * GamePanel.SCALED_SIZE) / 48 == entityBotRow) {
+                    bomber.CheckDie = true;
+                    System.out.println("Die Up");
+                }
+            }
+        }
+        //down
+        for (int i = 0; i <= boom.frameDown; i++) {
+            if (boom.x / GamePanel.SCALED_SIZE == entityRightCol || boom.x / GamePanel.SCALED_SIZE == entityLeftCol) {
+                if ((boom.y + i * GamePanel.SCALED_SIZE) / 48 == entityTopRow) {
+                    bomber.CheckDie = true;
+                    System.out.println("Die Up");
+                }
+            }
+        }
+        // left
+        for (int i = 0; i <= boom.frameLeft; i++) {
+            if (boom.y / GamePanel.SCALED_SIZE == entityTopRow || boom.y / GamePanel.SCALED_SIZE == entityBotRow) {
+                if ((boom.x - i * GamePanel.SCALED_SIZE) / 48 == entityRightCol) {
+                    bomber.CheckDie = true;
+                    System.out.println("Die Up");
+                }
+            }
+        }
+        //right
+        for (int i = 0; i <= boom.frameRight; i++) {
+            if (boom.y / GamePanel.SCALED_SIZE == entityTopRow || boom.y / GamePanel.SCALED_SIZE == entityBotRow) {
+                if ((boom.x + i * GamePanel.SCALED_SIZE) / 48 == entityLeftCol) {
+                    bomber.CheckDie = true;
+                    System.out.println("Die Up");
+                }
+            }
+        }
     }
     public void checkDie(Bomber bomber, Bomb bomb){
         int entityLeftWorldX = bomber.x + bomber.solidArea.x;

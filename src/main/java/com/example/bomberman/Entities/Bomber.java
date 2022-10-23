@@ -15,79 +15,42 @@ public class Bomber extends Entity{
     public BufferedImage up1, up2, up3, down1, down2, down3, left1, left2, left3, right1, right2, right3;
     int spriteCounter = 0;
     int spriteNum = 1;
-    public int x,y;
-    public boolean checkDie;
-
+    public boolean CheckDie=false;
 
     public Bomber(GamePanel gamePanel, Keyboard keyboard) {
         this.gamePanel = gamePanel;
         this.keyboard = keyboard;
         setDefaultValues();
-        getBomberImage();
+        sprites.getPlayerImage();
         direction = "DOWN";
-        checkDie = false;
-
-
         solidArea = new Rectangle();
         solidArea.x = 10;
         solidArea.y = 10;
         solidArea.width = 20;
         solidArea.height = 28;
 
-
     }
 
     public void setDefaultValues(){
         x = 48;
         y = 48;
-        speed = 4;
+        speed = 8;
     }
 
-    public void getBomberImage(){
-        try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/sprites/up-1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/sprites/up-2.png"));
-            up3 = ImageIO.read(getClass().getResourceAsStream("/sprites/up-3.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/sprites/down-1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/sprites/down-2.png"));
-            down3 = ImageIO.read(getClass().getResourceAsStream("/sprites/down-3.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/sprites/left-1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/sprites/left-2.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("/sprites/left-3.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/sprites/right-1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/sprites/right-2.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("/sprites/right-3.png"));
 
 
-           /* up1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up_1.png"));
-            up3 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_up_2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_down.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_down_1.png"));
-            down3 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_down_2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_left.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_left_1.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_left_2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_right.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_right_1.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("/sprites/player_right_2.png"));
-*/
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void update(Object object, Boom bomb){
+    public void update(Object object, Boom boom){
         keyboard.update();
-        if(checkDie == true){
-            x = 48;
-            y = 48;
-            checkDie=false;
+        if(CheckDie){
+            x=48;
+            y=48;
+            CheckDie=false;
         }
         if(keyboard.right || keyboard.up ||
-                keyboard.down || keyboard.left ) {
+                keyboard.down || keyboard.left) {
             if(keyboard.up){
                 direction = "UP";
+
             }
             else if(keyboard.down){
                 direction = "DOWN"; 
@@ -101,27 +64,23 @@ public class Bomber extends Entity{
                 direction = "RIGHT";
 
             }
-            //check tile collision
             collisionOn = false;
             gamePanel.checkCollision.checkTile(this);
-
             if(collisionOn == false) {
                 switch (direction){
                     case "UP": {
                         y -= speed;
-                        if(object.mapObjectNum[(y)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE] == 5){
+                        if(object.mapObjectNum[(y)/ GamePanel.SCALED_SIZE][(x + GamePanel.SCALED_SIZE /2)/ GamePanel.SCALED_SIZE] == 5){
                             object.mapObjectNum[(y)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
-                            bomb.sizeBomb++;
+//                            System.out.println("up");
+                            boom.sizeBomb++;
                         }
                         if(object.mapObjectNum[y /gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 6){
                             object.mapObjectNum[y /gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
-                            bomb.NumOfBomb++;
+                            boom.NumOfBomb++;
                         }
                         if(object.mapObjectNum[y /gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 7){
                             object.mapObjectNum[y /gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
                             speed += 2;
                         }
                         break;
@@ -130,36 +89,34 @@ public class Bomber extends Entity{
                         y += speed;
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE/2 )/gamePanel.SCALED_SIZE] == 5){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE/2 )/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
-                            bomb.sizeBomb++;
+//                            System.out.println("down");
+                            boom.sizeBomb++;
                         }
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 6){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
-                            bomb.NumOfBomb++;
+                            boom.NumOfBomb++;
                         }
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 7){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
                             speed += 2;
                         }
+
+
                         break;
                     }
                     case "LEFT": {
                         x -= speed;
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x)/gamePanel.SCALED_SIZE] == 5){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x)/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
-                            bomb.sizeBomb++;
+//                            System.out.println("left");
+                            boom.sizeBomb++;
                         }
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x)/gamePanel.SCALED_SIZE]== 6){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x)/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
-                            bomb.NumOfBomb++;
+                            boom.NumOfBomb++;
                         }
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x)/gamePanel.SCALED_SIZE] == 7){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x)/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
                             speed += 2;;
                         }
                         break;
@@ -168,17 +125,15 @@ public class Bomber extends Entity{
                         x += speed;
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] == 5){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
-                            bomb.sizeBomb++;
+//                            System.out.println("right");
+                            boom.sizeBomb++;
                         }
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE]== 6){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
-                            bomb.NumOfBomb++;
+                            boom.NumOfBomb++;
                         }
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] == 7){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] = 0;
-                            gamePanel.playSE(0);
                             speed += 2;
                         }
                         break;
@@ -197,6 +152,7 @@ public class Bomber extends Entity{
                 spriteCounter = 0;
             }
         }
+
     }
 
     public void render (Graphics2D g2){
@@ -204,49 +160,49 @@ public class Bomber extends Entity{
         switch (direction) {
             case "UP" -> {
                 if (spriteNum == 1) {
-                    image = up1;
+                    image = sprites.PlayerUp1;
                 }
                 if (spriteNum == 2) {
-                    image = up2;
+                    image = sprites.PlayerUp2;
                 }
                 if (spriteNum == 3) {
-                    image = up3;
+                    image = sprites.PlayerUp3;
                 }
                 break;
             }
             case "DOWN" -> {
                 if (spriteNum == 1) {
-                    image = down1;
+                    image = sprites.PlayerDown1;
                 }
                 if (spriteNum == 2) {
-                    image = down2;
+                    image = sprites.PlayerDown2;
                 }
                 if (spriteNum == 3) {
-                    image = down3;
+                    image = sprites.PlayerDown3;
                 }
                 break;
             }
             case "LEFT" -> {
                 if (spriteNum == 1) {
-                    image = left1;
+                    image =sprites.PlayerLeft1 ;
                 }
                 if (spriteNum == 2) {
-                    image = left2;
+                    image =sprites.PlayerLeft2 ;
                 }
                 if (spriteNum == 3) {
-                    image = left3;
+                    image = sprites.PlayerLeft3;
                 }
                 break;
             }
             case "RIGHT" -> {
                 if (spriteNum == 1) {
-                    image = right1;
+                    image =sprites.PlayerRight1 ;
                 }
                 if (spriteNum == 2) {
-                    image = right2;
+                    image =sprites.PlayerRight2  ;
                 }
                 if (spriteNum == 3) {
-                    image = right3;
+                    image = sprites.PlayerRight3 ;
 
                 }
                 break;
