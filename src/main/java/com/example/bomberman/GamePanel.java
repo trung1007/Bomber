@@ -3,6 +3,7 @@ package com.example.bomberman;
 import com.example.bomberman.Entities.*;
 import com.example.bomberman.Entities.Object;
 import com.example.bomberman.Menu.MenuUI;
+import com.example.bomberman.graphics.UI;
 import com.example.bomberman.input.Keyboard;
 import com.example.bomberman.input.Mouse;
 
@@ -33,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Balloon balloon = new Balloon(this);
     Object object = new Object(this);
     MenuUI menuUI = new MenuUI(this,mouse);
+    UI ui = new UI(this);
 
     public CheckCollision checkCollision = new CheckCollision(this);
 
@@ -81,8 +83,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         bomber.update(object, boom);
-        //bomb_caoTrung.update(bomber);
-        //bomb.update(bomber);
         boom.update(bomber);
         menuUI.update();
     }
@@ -94,8 +94,8 @@ public class GamePanel extends JPanel implements Runnable {
         if(GamePanel.GameState==0){
             object.render(g2);
             bomber.render(g2);
-            //bomb.render(g2,object,bomber);
             boom.render(g2,bomber);
+            ui.draw(g2);
         }
         if(GamePanel.GameState==1){
             menuUI.render(g2);

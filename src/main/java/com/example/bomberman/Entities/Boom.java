@@ -18,6 +18,8 @@ public class Boom extends Entity {
 
     int NumOfBomb = 0;
 
+    int boomCount =0;
+
     public Boom(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         sprites.getBombImage();
@@ -152,8 +154,11 @@ public class Boom extends Entity {
                     image = null;
                     countTime = 0;
                 }
-                g2.drawImage(image, x, y, SIZE, SIZE, null);
-            } else {
+            }
+            countTime++;
+            boomCount++;
+            g2.drawImage(image, x, y, SIZE, SIZE, null);
+            if(isExploring){
                 if (countTime <= timeExploring) {
                     gamePanel.checkCollision.checkFlameBomb(this,countTime,timeExploring);
                     gamePanel.checkCollision.checkDie(bomber, this);
@@ -183,9 +188,9 @@ public class Boom extends Entity {
                     explored = true;
                     isExploring = false;
                     countTime = 0;
+                    boomCount =0;
                 }
             }
-            countTime++;
         }
     }
 }
