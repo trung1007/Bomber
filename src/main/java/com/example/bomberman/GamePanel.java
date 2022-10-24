@@ -8,6 +8,7 @@ import com.example.bomberman.input.Mouse;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
     public static final int DEFAULT_SIZE = 16;//16x16tile
@@ -18,24 +19,38 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int SCREEN_WIDTH = SCALED_SIZE * MAX_SCREEN_COL; // 768 pixel
     public static final int SCREEN_HEIGHT = SCALED_SIZE * MAX_SCREEN_ROW; //576 pixel
     Graphics2D g2;
-    int FPS = 60;
-    public long lastTime = System.nanoTime();
+    double FPS = 60;
+
     public final double ns = 1000000000.0 / FPS;
-    public double delta = 0;
-    public double delta1 = 0;
-    public static int GameState=0;
-    public static Thread gameThread;
+
+
+    public static int GameState = 0;
+    public Thread gameThread;
     Keyboard keyboard = new Keyboard();
-    Mouse mouse=new Mouse(this);
+    Mouse mouse = new Mouse(this);
 
     public Bomber bomber = new Bomber(this, keyboard);
     public Bomb bomb = new Bomb(this);
-    public Boom boom=new Boom(this);
+    public Boom boom = new Boom(this);
     public Balloon balloon = new Balloon(this);
     Object object = new Object(this);
-    MenuUI menuUI = new MenuUI(this,mouse);
+    MenuUI menuUI = new MenuUI(this, mouse);
 
     public CheckCollision checkCollision = new CheckCollision(this);
+    public ArrayList<Boom> boomArrayList = new ArrayList<>();
+
+    public void AddBoom() {
+        if (boomArrayList.size() == 0) {
+            boomArrayList.add(boom);
+        } else {
+            Boom boom1 = new Boom(this);
+            boomArrayList.add(boom1);
+        }
+    }
+
+    public void RemoveBoom() {
+        boomArrayList.remove(boomArrayList.size() - 1);
+    }
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -43,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyboard);
         this.addMouseListener(mouse);
         this.setFocusable(true);
-
+        AddBoom();
     }
 
     public void start() {
@@ -56,35 +71,55 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         long timer = 0;
         long drawCount = 0;
-
+        long lastTime = System.nanoTime();
+        double delta=0;
+        long now;
         while (gameThread != null) {
-            long now = System.nanoTime();
+            now = System.nanoTime();
             delta += (now - lastTime) / ns;
-            delta1 += (now - lastTime) / ns;
             timer += (now - lastTime);
             lastTime = now;
             while (delta >= 0) {
-
                 update();
                 repaint();
                 delta--;
-
                 drawCount++;
             }
             if (timer >= 1000000000) {
-//                System.out.println(drawCount);
+                System.out.println("FPS:"+drawCount);
+                System.out.println("BoomList:" + boomArrayList.size());
+                System.out.println("PosBoom1x:"+boomArrayList.get(0).x);
+                System.out.println("PosBoom1y:"+boomArrayList.get(0).y);
+                System.out.println("x:"+boomArrayList.get(0).bomX);
+                System.out.println("y:"+boomArrayList.get(0).bomY);
+                if(boomArrayList.size()>=2){
+                    System.out.println("PosBoom2x:"+boomArrayList.get(1).x);
+                    System.out.println("PosBoom2y:"+boomArrayList.get(1).y);
+                }
+
                 drawCount = 0;
                 timer = 0;
             }
-
         }
     }
 
     public void update() {
-        bomber.update(object, boom);
         //bomb_caoTrung.update(bomber);
         //bomb.update(bomber);
-        boom.update(bomber);
+
+//        for(int j=0;j<boomArrayList.size();j++){
+//            boomArrayList.get(j).update(bomber);
+//        }
+
+            bomber.update(object, boom);
+//            boom.update(bomber);
+
+            // bomber.update(object, boomArrayList.get(j));
+            for (int j = 0; j<boomArrayList.size();j++){
+                boomArrayList.get(j).update(bomber);
+            }
+
+//        }
         menuUI.update();
     }
 
@@ -92,13 +127,40 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        if(GamePanel.GameState==0){
+        if (GamePanel.GameState == 0) {
             object.render(g2);
             bomber.render(g2);
-            //bomb.render(g2,object,bomber);
-            boom.render(g2);
+            //boom.render(g2);
+//            for(int j = 0; j < boomArrayList.size(); j++) {
+//                boomArrayList.get(j).render(g2);
+//
+//            }
+//            boomArrayList.get(0).render(g2);
+//            if(boomArrayList.size()>=2&& !boomArrayList.get(0).isExploring&& boomArrayList.get(0).explored){
+//                boomArrayList.get(1).render(g2);
+//            }
+//            boomArrayList.get(0).renderBomb(g2);
+//            boomArrayList.get(0).renderFlame(g2);
+//            if(boomArrayList.size()>=2 && keyboard.space){
+//                boomArrayList.get(1).renderBomb(g2);
+//
+//                boomArrayList.get(1).renderFlame(g2);
+//
+//            }
+           // boomArrayList.get(0).render(g2);
+//            if(boomArrayList.size()>=2 && boom.explored){
+//                boomArrayList.get(1).render(g2);
+//            }
+            for(int i=0;i<boomArrayList.size();i++){
+                    //boomArrayList.get(i).update(bomber);
+                    boomArrayList.get(i).render(g2);
+
+
+            }
+
+
         }
-        if(GamePanel.GameState==1){
+        if (GamePanel.GameState == 1) {
             menuUI.render(g2);
         }
         g2.dispose();

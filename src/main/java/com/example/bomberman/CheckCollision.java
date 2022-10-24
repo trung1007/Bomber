@@ -52,7 +52,7 @@ public class CheckCollision {
                 entityLeftCol = (entityLeftWorldX - bomber.speed) / gamePanel.SCALED_SIZE;
                 tileNum1 = gamePanel.object.mapObjectNum[entityTopRow][entityLeftCol];
                 tileNum2 = gamePanel.object.mapObjectNum[entityBotRow][entityLeftCol];
-                System.out.println(entityLeftWorldX);
+//                System.out.println(entityLeftWorldX);
                 if (gamePanel.object.collision[tileNum1] == true || gamePanel.object.collision[tileNum2] == true) {
                     bomber.collisionOn = true;
                 }
@@ -138,25 +138,25 @@ public class CheckCollision {
             if(boom.frameUp < boom.sizeBomb) {
                 if (gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] == 4) {
                     int random = RandomNumOfObject(RandomItem);
-                    gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] = random;
+                    gamePanel.object.mapObjectNum[boom.y / 48 - boom.frameUp - 1][boom.x / 48] = 6;
                 }
             }
             if (boom.frameDown < boom.sizeBomb) {
                 if (gamePanel.object.mapObjectNum[boom.y / 48 + boom.frameDown + 1][boom.x / 48] == 4) {
                     int random = RandomNumOfObject(RandomItem);
-                    gamePanel.object.mapObjectNum[boom.y / 48 + boom.frameDown + 1][boom.x / 48] = random;
+                    gamePanel.object.mapObjectNum[boom.y / 48 + boom.frameDown + 1][boom.x / 48] = 6;
                 }
             }
             if (boom.frameLeft < boom.sizeBomb) {
                 if (gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 - boom.frameLeft - 1] == 4) {
                     int random = RandomNumOfObject(RandomItem);
-                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 - boom.frameLeft - 1] = random;
+                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 - boom.frameLeft - 1] = 6;
                 }
             }
             if (boom.frameRight < boom.sizeBomb) {
                 if (gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] == 4) {
                     int random = RandomNumOfObject(RandomItem);
-                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] = random;
+                    gamePanel.object.mapObjectNum[boom.y / 48][boom.x / 48 + boom.frameRight + 1] = 6;
                 }
             }
         }
