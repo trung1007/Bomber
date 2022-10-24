@@ -82,7 +82,6 @@ public class Bomb {
             int col = (bomberman.x + 24) / GamePanel.SCALED_SIZE * GamePanel.SCALED_SIZE;
             bombX = col;
             bombY = row;
-
             explored = false;
         }
 
