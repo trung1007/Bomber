@@ -12,25 +12,14 @@ import java.io.IOException;
 public class Bomber extends Entity{
     GamePanel gamePanel;
     Keyboard keyboard;
-    public BufferedImage up1, up2, up3, down1, down2, down3, left1, left2, left3, right1, right2, right3;
     int spriteCounter = 0;
     int spriteNum = 1;
-    public boolean CheckDie=false;
 
     public Bomber(GamePanel gamePanel, Keyboard keyboard) {
         this.gamePanel = gamePanel;
         this.keyboard = keyboard;
         setDefaultValues();
         sprites.getPlayerImage();
-        direction = "DOWN";
-        solidArea = new Rectangle();
-        solidArea.x = 10;
-        solidArea.y = 10;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-        solidArea.width = 20;
-        solidArea.height = 28;
-
     }
 
     public void setDefaultValues(){
@@ -39,14 +28,12 @@ public class Bomber extends Entity{
         speed = 8;
     }
 
-
-
     public void update(Object object, Boom boom){
         keyboard.update();
         if(CheckDie){
             x=48;
             y=48;
-            CheckDie=false;
+            CheckDie = false;
         }
         if(keyboard.right || keyboard.up ||
                 keyboard.down || keyboard.left) {
@@ -166,10 +153,9 @@ public class Bomber extends Entity{
                 spriteCounter = 0;
             }
         }
-
     }
-
-    public void render (Graphics2D g2){
+@Override
+    public void render (Graphics2D g2,String name){
         BufferedImage image = null;
         switch (direction) {
             case "UP" -> {
@@ -217,7 +203,6 @@ public class Bomber extends Entity{
                 }
                 if (spriteNum == 3) {
                     image = sprites.PlayerRight3 ;
-
                 }
                 break;
             }

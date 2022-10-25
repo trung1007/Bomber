@@ -1,47 +1,46 @@
 package com.example.bomberman.Entities;
 
+
+import com.example.bomberman.Entities.Enemy.AI.AI;
+import com.example.bomberman.Entities.Enemy.AI.AIMedium2;
 import com.example.bomberman.GamePanel;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Balloon {
+public class Balloon extends Enemies {
     GamePanel gamePanel;
-    BufferedImage right1, right2, right3, left1, left2, left3;
-    public Balloon(GamePanel gamePanel){
+    protected int directionBalloon;
+    protected AI ai;
+
+    public Balloon(Bomber bomber, GamePanel gamePanel, Boom boom) {
         this.gamePanel = gamePanel;
-//        direction = "RIGHT";
+        setDefaultValues();
+        sprites.getBalloonImage();
+        ai = new AIMedium2(bomber, this, boom);
+
     }
-    public void setBalloonImage(){
-        try{
-            right1 = ImageIO.read(getClass().getResourceAsStream("/sprites/balloom_right1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/sprites/balloom_right2.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("/sprites/balloom_right3.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/sprites/balloom_left1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/sprites/balloom_left2.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("/sprites/balloom_left3.png"));
-        } catch (IOException e){
-            e.printStackTrace();
+
+    @Override
+    public void setDefaultValues() {
+        x = 400;
+        y = 400;
+        speed = 3;
+    }
+
+
+    @Override
+    public void update(Object object) {
+        if(CheckDie){
+            x=-1;
+            y=-1;
         }
-
-    }
-    public void update(){
-
-    }
-    public void render(Graphics2D g2){
-//        BufferedImage image = null;
-//        switch (direction){
-//            case "RIGHT":{
-//                image = right1;
-//                break;
-//            }
-//            case "LEFT":{
-//                image = left1;
-//                break;
-//            }
-//        }
-//        g2.drawImage(image, 100, 100,gamePanel.SCALED_SIZE, gamePanel.SCALED_SIZE, null);
+        collisionOn = false;
+        gamePanel.checkCollision.checkTile(this);
+        if (collisionOn == true) {
+            directionBalloon = ai.calculateDirection();
+        }
+        HandlePosition(directionBalloon);
     }
 }

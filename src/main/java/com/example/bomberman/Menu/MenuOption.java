@@ -11,20 +11,22 @@ public class MenuOption {
 
     BufferedImage option;
     String textOption;
-    public static int setColorNumOfPlay =1;
+    public static int setColorNum =1;
     public static int setColorNumOfHelp =1;
     public static int setColorNumOfExit =1;
 
-    int pos;
+    public int pos;
     public int XofOption;
     public int YofOption;
 
     public int XofString;
     public int YofString;
+    public Color color;
 
-    public MenuOption(String TextOption,int pos){
+    public MenuOption(String TextOption,int pos,Color color){
         this.pos=pos;
         this.textOption=TextOption;
+        this.color=color;
         GetMenuOption();
         SetDefault();
 
@@ -47,11 +49,11 @@ public class MenuOption {
 
     public void render(Graphics2D g2){
         g2.drawImage(option, XofOption,YofOption,196,48,null);
-        if(setColorNumOfPlay ==1){
+        if(setColorNum ==1){
             g2.setColor(Color.BLACK);
         }
-        if(setColorNumOfPlay ==2){
-            g2.setColor(Color.GREEN);
+        if(setColorNum ==2){
+            g2.setColor(this.color);
         }
         g2.setFont(new Font("TimesRoman",Font.PLAIN,20));
         g2.drawString(textOption,XofString,YofString);
