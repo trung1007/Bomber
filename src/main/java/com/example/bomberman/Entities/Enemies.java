@@ -8,10 +8,10 @@ import java.awt.image.BufferedImage;
 public abstract class Enemies extends Entity {
     int spriteCounter = 0;
     int spriteNum = 1;
+    BufferedImage image = null;
 
     public abstract void setDefaultValues();
     public abstract void update(Object object);
-
     public void HandlePosition(int directionEnemy){
         if( directionEnemy == 0 || directionEnemy == 1
                 || directionEnemy == 2 || directionEnemy == 3) {
@@ -64,7 +64,6 @@ public abstract class Enemies extends Entity {
     }
     @Override
     public void render(Graphics2D g2,String name){
-        BufferedImage image = null;
         switch (direction) {
             case "UP" -> {
                 if (spriteNum == 1) {

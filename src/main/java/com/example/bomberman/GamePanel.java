@@ -3,6 +3,7 @@ package com.example.bomberman;
 import com.example.bomberman.Entities.*;
 import com.example.bomberman.Entities.Object;
 import com.example.bomberman.Menu.MenuUI;
+import com.example.bomberman.graphics.UI;
 import com.example.bomberman.input.Keyboard;
 import com.example.bomberman.input.Mouse;
 
@@ -14,37 +15,45 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int DEFAULT_SIZE = 16;//16x16tile
     public static final int SCALE = 3;
     public static final int SCALED_SIZE = DEFAULT_SIZE * SCALE;// 48x48tile
-    public static final int MAX_SCREEN_COL = 16;
-    public static final int MAX_SCREEN_ROW = 12;
+    public static final int MAX_SCREEN_COL = 22;
+    public static final int MAX_SCREEN_ROW = 16;
     public static final int SCREEN_WIDTH = SCALED_SIZE * MAX_SCREEN_COL; // 768 pixel
     public static final int SCREEN_HEIGHT = SCALED_SIZE * MAX_SCREEN_ROW; //576 pixel
     Graphics2D g2;
     double FPS = 60;
 
     public final double ns = 1000000000.0 / FPS;
-
-
     public static int GameState = 0;
     public Thread gameThread;
     Keyboard keyboard = new Keyboard();
     Mouse mouse = new Mouse(this);
 
     public Bomber bomber = new Bomber(this, keyboard);
-    public Bomb bomb = new Bomb(this);
-    public Boom boom = new Boom(this,bomber);
-    public Balloon balloon = new Balloon(bomber, this, boom);
-    public Frog frog=new Frog(bomber, this, boom);
+    public Boom boom = new Boom(this, bomber);
+    //    public Balloon balloon = new Balloon(bomber, this, boom);
+    public ArrayList<Balloon> balloons = new ArrayList<>();
+
+    public void setBalloon() {
+        for (int i = 0; i < 4; i++) {
+            Balloon balloon = new Balloon(bomber, this, boom);
+            balloons.add(balloon);
+        }
+    }
+
+    public Frog frog = new Frog(bomber, this, boom);
+
     Object object = new Object(this);
+    UI ui = new UI(this);
     MenuUI menuUI = new MenuUI(this, mouse);
 
-    public CheckCollision checkCollision = new CheckCollision(this,boom);
+    public CheckCollision checkCollision = new CheckCollision(this, boom);
     public ArrayList<Boom> boomArrayList = new ArrayList<>();
 
     public void AddBoom() {
         if (boomArrayList.size() == 0) {
             boomArrayList.add(boom);
         } else {
-            Boom boom1 = new Boom(this,bomber);
+            Boom boom1 = new Boom(this, bomber);
             boomArrayList.add(boom1);
         }
     }
@@ -60,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addMouseListener(mouse);
         this.setFocusable(true);
         AddBoom();
+        setBalloon();
     }
 
     public void start() {
@@ -107,12 +117,16 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        bomber.update(object, boom);
-        balloon.update(object);
+        //bomber.update(object,boom);
+        //balloon.update(object);
+        for(int i=0;i<4;i++){
+            balloons.get(i).update(object);
+        }
         frog.update(object);
 
         // bomber.update(object, boomArrayList.get(j));
         for (int j = 0; j < boomArrayList.size(); j++) {
+            bomber.update(object, boomArrayList.get(j));
             boomArrayList.get(j).update(bomber);
         }
 
@@ -126,12 +140,16 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         if (GamePanel.GameState == 0) {
             object.render(g2);
-            bomber.render(g2,"Bomber");
-            balloon.render(g2,"Balloon");
-            frog.render(g2,"Frog");
-            for (int i = 0; i < boomArrayList.size(); i++) {
-                boomArrayList.get(i).render(g2,"boom");
+            bomber.render(g2, "Bomber");
+            //balloon.render(g2, "Balloon");
+            for(int i=0;i<4;i++){
+                balloons.get(i).render(g2,"Balloon");
             }
+            frog.render(g2, "Frog");
+            for (int i = 0; i < boomArrayList.size(); i++) {
+                boomArrayList.get(i).render(g2, "boom");
+            }
+            ui.draw(g2);
 
         }
         if (GamePanel.GameState == 1) {

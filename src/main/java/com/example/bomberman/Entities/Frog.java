@@ -31,32 +31,31 @@ public class Frog extends Enemies{
 
 @Override
     public void setDefaultValues(){
-        x = 200;
-        y = 300;
+        x = 48*20;
+        y = 48*13;
         speed = 3;
     }
     @Override
     public void update(Object object){
         if(CheckDie){
-            x=-1;
-            y=-1;
+//            x=48;
+//            y=200;
+
         }
         if((bomber.x-this.x)*(bomber.x-this.x)
                 + (bomber.y-this.y)*(bomber.y-this.y) <= 30000) {
-            speed = 5;
+            speed = 4;
             directionFrog = ai.calculateDirection();
         } else {
             speed = 3;
         }
-
-        System.out.println("+++" + speed);
-
         if(collisionOn == true) {
             directionFrog = ai.calculateDirection();
         }
         collisionOn = false;
         gamePanel.checkCollision.checkTile(this);
         HandlePosition(directionFrog);
+        gamePanel.checkCollision.checkDieEnemy(bomber,this);
     }
 
 }

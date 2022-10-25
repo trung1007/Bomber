@@ -12,27 +12,29 @@ import java.io.IOException;
 public class Bomber extends Entity{
     GamePanel gamePanel;
     Keyboard keyboard;
+    Frog frog;
     int spriteCounter = 0;
     int spriteNum = 1;
 
     public Bomber(GamePanel gamePanel, Keyboard keyboard) {
         this.gamePanel = gamePanel;
         this.keyboard = keyboard;
+
         setDefaultValues();
         sprites.getPlayerImage();
     }
 
     public void setDefaultValues(){
         x = 48;
-        y = 48;
-        speed = 8;
+        y = 144;
+        speed = 4;
     }
 
-    public void update(Object object, Boom boom){
+    public void update(Object object,Boom boom){
         keyboard.update();
         if(CheckDie){
             x=48;
-            y=48;
+            y=144;
             CheckDie = false;
         }
         if(keyboard.right || keyboard.up ||
@@ -61,8 +63,8 @@ public class Bomber extends Entity{
                         y -= speed;
                         if(object.mapObjectNum[(y)/ GamePanel.SCALED_SIZE][(x + GamePanel.SCALED_SIZE /2)/ GamePanel.SCALED_SIZE] == 5){
                             object.mapObjectNum[(y)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE] = 0;
+                            boom.sizeBoom++;
 
-                            boom.sizeBomb++;
                         }
                         if(object.mapObjectNum[y /gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 6){
                             object.mapObjectNum[y /gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
@@ -80,10 +82,12 @@ public class Bomber extends Entity{
                     }
                     case "DOWN": {
                         y += speed;
+
+
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE/2 )/gamePanel.SCALED_SIZE] == 5){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE/2 )/gamePanel.SCALED_SIZE] = 0;
+                            boom.sizeBoom++;
 
-                            boom.sizeBomb++;
                         }
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] == 6){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE /2)/gamePanel.SCALED_SIZE] = 0;
@@ -100,10 +104,12 @@ public class Bomber extends Entity{
                     }
                     case "LEFT": {
                         x -= speed;
+
+
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x)/gamePanel.SCALED_SIZE] == 5){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x)/gamePanel.SCALED_SIZE] = 0;
+                            boom.sizeBoom++;
 
-                            boom.sizeBomb++;
 
                         }
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x)/gamePanel.SCALED_SIZE]== 6){
@@ -121,9 +127,11 @@ public class Bomber extends Entity{
                     }
                     case "RIGHT": {
                         x += speed;
+
+
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] == 5){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] = 0;
-                            boom.sizeBomb++;
+                            boom.sizeBoom++;
                         }
                         if(object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE]== 6){
                             object.mapObjectNum[(y + gamePanel.SCALED_SIZE/2)/gamePanel.SCALED_SIZE][(x + gamePanel.SCALED_SIZE)/gamePanel.SCALED_SIZE] = 0;
