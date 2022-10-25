@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class Object extends Entity {
+public class Object{
     GamePanel gamePanel;
     public String NameOfObject;
     public BufferedImage[] object = new BufferedImage[10];

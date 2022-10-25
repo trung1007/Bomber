@@ -6,24 +6,22 @@ import java.awt.*;
 import java.util.ArrayList;
 
 
-public  class Entity {
+public abstract class Entity {
     Sprites sprites=new Sprites();
 
     public int speed;
-    public String direction;
-
-    public Rectangle solidArea;
-
-
+    public String direction = "DOWN";
+    public Rectangle solidArea = new Rectangle(10,10,20,28);
     public int countTime = 0, intervalToExplored = 20, timeExploring = 20;
 
     public int x, y;
 //    public int NumOfBoom=1;
 //    public boolean NumIncrease;
     public boolean collisionOn = false;
+    public boolean CheckDie = false;
 
-    public int solidAreaDefaultX;
-    public int solidAreaDefaultY;
+    public abstract void render(Graphics2D g2,String name);
+
     //ArrayList<Boom>boomArrayList=new ArrayList<>();
 
 

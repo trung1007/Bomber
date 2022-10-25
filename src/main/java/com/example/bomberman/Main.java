@@ -10,11 +10,8 @@ public class Main {
                 Window.setTitle("Bomberman");
                 Window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 Window.setResizable(false);
-
-
                 GamePanel gamePanel = new GamePanel();
                 Window.add(gamePanel);
-
                 Window.pack();
                 Window.setLocationRelativeTo(null);
                 Window.setVisible(true);

@@ -3,26 +3,29 @@ package com.example.bomberman;
 import com.example.bomberman.Entities.Bomb;
 import com.example.bomberman.Entities.Bomber;
 import com.example.bomberman.Entities.Boom;
+import com.example.bomberman.Entities.Entity;
 
 import java.util.Random;
 
 public class CheckCollision {
     GamePanel gamePanel;
+    Boom boom;
     int[] RandomItem = {0, 0, 0, 0, 0, 0, 0, 5, 6, 7};
 
-    public CheckCollision(GamePanel gamePanel) {
+    public CheckCollision(GamePanel gamePanel,Boom boom) {
         this.gamePanel = gamePanel;
+        this.boom = boom;
     }
     public int RandomNumOfObject(int[] Num) {
         Random random = new Random();
         return Num[random.nextInt(Num.length - 1)];
     }
 
-    public void checkTile(Bomber bomber) {
-        int entityLeftWorldX = bomber.x + bomber.solidArea.x;
-        int entityRightWorldX = bomber.x + bomber.solidArea.x + bomber.solidArea.width;
-        int entityTopWorldY = bomber.y + bomber.solidArea.y;
-        int entityBotWorldY = bomber.y + bomber.solidArea.y + bomber.solidArea.height;
+    public void checkTile(Entity entity) {
+        int entityLeftWorldX = entity.x + entity.solidArea.x;
+        int entityRightWorldX = entity.x + entity.solidArea.x + entity.solidArea.width;
+        int entityTopWorldY = entity.y + entity.solidArea.y;
+        int entityBotWorldY = entity.y + entity.solidArea.y + entity.solidArea.height;
 
         int entityLeftCol = entityLeftWorldX / GamePanel.SCALED_SIZE;
         int entityRightCol = entityRightWorldX / GamePanel.SCALED_SIZE;
@@ -30,40 +33,40 @@ public class CheckCollision {
         int entityBotRow = entityBotWorldY / GamePanel.SCALED_SIZE;
 
         int tileNum1, tileNum2;
-        switch (bomber.direction) {
+        switch (entity.direction) {
             case "UP":
-                entityTopRow = (entityTopWorldY - bomber.speed) / gamePanel.SCALED_SIZE;
+                entityTopRow = (entityTopWorldY - entity.speed) / gamePanel.SCALED_SIZE;
                 tileNum1 = gamePanel.object.mapObjectNum[entityTopRow][entityLeftCol];
                 tileNum2 = gamePanel.object.mapObjectNum[entityTopRow][entityRightCol];
                 if (gamePanel.object.collision[tileNum1] == true || gamePanel.object.collision[tileNum2] == true) {
-                    bomber.collisionOn = true;
+                    entity.collisionOn = true;
                 }
                 break;
             case "DOWN":
-                entityBotRow = (entityBotWorldY + bomber.speed) / gamePanel.SCALED_SIZE;
+                entityBotRow = (entityBotWorldY + entity.speed) / gamePanel.SCALED_SIZE;
                 tileNum1 = gamePanel.object.mapObjectNum[entityBotRow][entityLeftCol];
                 tileNum2 = gamePanel.object.mapObjectNum[entityBotRow][entityRightCol];
 
                 if (gamePanel.object.collision[tileNum1] == true || gamePanel.object.collision[tileNum2] == true) {
-                    bomber.collisionOn = true;
+                    entity.collisionOn = true;
                 }
                 break;
             case "LEFT":
-                entityLeftCol = (entityLeftWorldX - bomber.speed) / gamePanel.SCALED_SIZE;
+                entityLeftCol = (entityLeftWorldX - entity.speed) / gamePanel.SCALED_SIZE;
                 tileNum1 = gamePanel.object.mapObjectNum[entityTopRow][entityLeftCol];
                 tileNum2 = gamePanel.object.mapObjectNum[entityBotRow][entityLeftCol];
 //                System.out.println(entityLeftWorldX);
                 if (gamePanel.object.collision[tileNum1] == true || gamePanel.object.collision[tileNum2] == true) {
-                    bomber.collisionOn = true;
+                    entity.collisionOn = true;
                 }
                 break;
             case "RIGHT":
-                entityRightCol = (entityRightWorldX + bomber.speed) / gamePanel.SCALED_SIZE;
+                entityRightCol = (entityRightWorldX + entity.speed) / gamePanel.SCALED_SIZE;
                 tileNum1 = gamePanel.object.mapObjectNum[entityTopRow][entityRightCol];
                 tileNum2 = gamePanel.object.mapObjectNum[entityBotRow][entityRightCol];
 
                 if (gamePanel.object.collision[tileNum1] == true || gamePanel.object.collision[tileNum2] == true) {
-                    bomber.collisionOn = true;
+                    entity.collisionOn = true;
                 }
                 break;
         }
@@ -161,44 +164,50 @@ public class CheckCollision {
             }
         }
     }
-    public void checkDie(Bomber bomber, Bomb bomb){
-        int entityLeftWorldX = bomber.x + bomber.solidArea.x;
-        int entityRightWorldX = bomber.x + bomber.solidArea.x + bomber.solidArea.width;
-        int entityTopWorldY = bomber.y + bomber.solidArea.y;
-        int entityBotWorldY = bomber.y + bomber.solidArea.y + bomber.solidArea.height;
+    public void checkDie(Entity entity, Boom boom) {
+        int entityLeftWorldX = entity.x + entity.solidArea.x;
+        int entityRightWorldX = entity.x + entity.solidArea.x + entity.solidArea.width;
+        int entityTopWorldY = entity.y + entity.solidArea.y;
+        int entityBotWorldY = entity.y + entity.solidArea.y + entity.solidArea.height;
 
         int entityLeftCol = entityLeftWorldX / GamePanel.SCALED_SIZE;
         int entityRightCol = entityRightWorldX / GamePanel.SCALED_SIZE;
         int entityTopRow = entityTopWorldY / GamePanel.SCALED_SIZE;
         int entityBotRow = entityBotWorldY / GamePanel.SCALED_SIZE;
 
-        for(int i = 0; i <= bomb.sizeBomb; i++){
-            //up
-            if((bomb.bombY / GamePanel.SCALED_SIZE) == entityTopRow ){
-                if((bomb.bombX + i * GamePanel.SCALED_SIZE)/48 == entityLeftCol || (bomb.bombX - i * GamePanel.SCALED_SIZE)/48 == entityRightCol ){
-                    bomber.CheckDie = true;
+        //up
+        for (int i = 0; i <= boom.frameUp; i++) {
+            if (boom.x / GamePanel.SCALED_SIZE == entityRightCol || boom.x / GamePanel.SCALED_SIZE == entityLeftCol) {
+                if ((boom.y - i * GamePanel.SCALED_SIZE) / 48 == entityBotRow) {
+                    entity.CheckDie = true;
                     System.out.println("Die Up");
                 }
             }
-            //down
-            if((bomb.bombY / GamePanel.SCALED_SIZE) == entityBotRow ){
-                if((bomb.bombX + i * GamePanel.SCALED_SIZE)/48 == entityLeftCol || (bomb.bombX - i * GamePanel.SCALED_SIZE)/48 == entityRightCol ){
-                    bomber.CheckDie = true;
-                    System.out.println("Die Down");
+        }
+        //down
+        for (int i = 0; i <= boom.frameDown; i++) {
+            if (boom.x / GamePanel.SCALED_SIZE == entityRightCol || boom.x / GamePanel.SCALED_SIZE == entityLeftCol) {
+                if ((boom.y + i * GamePanel.SCALED_SIZE) / 48 == entityTopRow) {
+                    entity.CheckDie = true;
+                    System.out.println("Die Up");
                 }
             }
-            // left
-            if((bomb.bombX / GamePanel.SCALED_SIZE) == entityLeftCol ){
-                if((bomb.bombY - i * GamePanel.SCALED_SIZE)/48 == entityBotRow || (bomb.bombY + i * GamePanel.SCALED_SIZE)/48 == entityTopRow){
-                    bomber.CheckDie = true;
-                    System.out.println("Die left");
+        }
+        // left
+        for (int i = 0; i <= boom.frameLeft; i++) {
+            if (boom.y / GamePanel.SCALED_SIZE == entityTopRow || boom.y / GamePanel.SCALED_SIZE == entityBotRow) {
+                if ((boom.x - i * GamePanel.SCALED_SIZE) / 48 == entityRightCol) {
+                    entity.CheckDie = true;
+                    System.out.println("Die Up");
                 }
             }
-            //right
-            if((bomb.bombX / GamePanel.SCALED_SIZE) == entityRightCol ){
-                if((bomb.bombY - i * GamePanel.SCALED_SIZE)/48 == entityBotRow || (bomb.bombY + i * GamePanel.SCALED_SIZE)/48 == entityTopRow){
-                    bomber.CheckDie = true;
-                    System.out.println("Die right");
+        }
+        //right
+        for (int i = 0; i <= boom.frameRight; i++) {
+            if (boom.y / GamePanel.SCALED_SIZE == entityTopRow || boom.y / GamePanel.SCALED_SIZE == entityBotRow) {
+                if ((boom.x + i * GamePanel.SCALED_SIZE) / 48 == entityLeftCol) {
+                    entity.CheckDie = true;
+                    System.out.println("Die Up");
                 }
             }
         }

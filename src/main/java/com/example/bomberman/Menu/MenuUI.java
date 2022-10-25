@@ -12,9 +12,9 @@ public class MenuUI {
         this.gamePanel=gamePanel;
         this.mouse=mouse;
     }
-    MenuOption menuOption1=new MenuOption("START",1);
-    MenuOption menuOption2=new MenuOption("OPTION",2);
-    MenuOption menuOption3=new MenuOption("EXIT",3);
+    MenuOption menuOption1=new MenuOption("START",1,Color.GREEN);
+    MenuOption menuOption2=new MenuOption("HELP",2,Color.YELLOW);
+    MenuOption menuOption3=new MenuOption("EXIT",3,Color.RED);
     MenuBackground menuBackground=new MenuBackground();
 
     public void update(){
