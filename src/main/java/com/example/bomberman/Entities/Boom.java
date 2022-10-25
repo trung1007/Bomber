@@ -19,8 +19,8 @@ public class Boom extends Entity {
     private int maxBoom = 4;
 
     boolean checkCollisionBrickUp;
+    public int sizeBoom=1;
 
-    public int sizeBomb = 1;
 
     public int NumOfBoom = 1;
     public boolean NumIncrease;
@@ -54,7 +54,7 @@ public class Boom extends Entity {
 
     private int FrameUp() {
         int frame = 0;
-        for (int i = 1; i <= sizeBomb; i++) {
+        for (int i = 1; i <= sizeBoom; i++) {
             if (object.mapObjectNum[(y - i * SIZE) / SIZE][x / SIZE] == 1
                     || object.mapObjectNum[(y - i * SIZE) / SIZE][x / SIZE] == 2) {
                 if (object.mapObjectNum[(y - i * SIZE) / SIZE][x / SIZE] == 2) {
@@ -66,16 +66,17 @@ public class Boom extends Entity {
             }
         }
         frameUp = frame;
+        System.out.println("sizeboomOfBoom" + sizeBoom);
+
         return frameUp;
     }
 
     private int FrameDown() {
         int frame = 0;
-        for (int i = 1; i <= sizeBomb; i++) {
+        for (int i = 1; i <= sizeBoom; i++) {
             if (object.mapObjectNum[(y + i * SIZE) / SIZE][x / SIZE] == 1
                     || object.mapObjectNum[(y + i * SIZE) / SIZE][x / SIZE] == 2) {
                 if (object.mapObjectNum[(y + i * SIZE) / SIZE][x / SIZE] == 2) {
-
                 }
                 break;
             } else {
@@ -88,7 +89,7 @@ public class Boom extends Entity {
 
     private int FrameLeft() {
         int frame = 0;
-        for (int i = 1; i <= sizeBomb; i++) {
+        for (int i = 1; i <= sizeBoom; i++) {
             if (object.mapObjectNum[y / SIZE][(x - i * SIZE) / SIZE] == 1
                     || object.mapObjectNum[y / SIZE][(x - i * SIZE) / SIZE] == 2) {
                 break;
@@ -102,7 +103,7 @@ public class Boom extends Entity {
 
     private int FrameRight() {
         int frame = 0;
-        for (int i = 1; i <= sizeBomb; i++) {
+        for (int i = 1; i <= sizeBoom; i++) {
             if (object.mapObjectNum[y / SIZE][(x + i * SIZE) / SIZE] == 1
                     || object.mapObjectNum[y / SIZE][(x + i * SIZE) / SIZE] == 2) {
                 break;
@@ -178,7 +179,7 @@ public class Boom extends Entity {
                 if (countTime <= timeExploring) {
                     gamePanel.checkCollision.checkFlameBomb(this, countTime, timeExploring);
                     gamePanel.checkCollision.checkDie(gamePanel.bomber, this);
-                    gamePanel.checkCollision.checkDie(gamePanel.balloon, this);
+                    gamePanel.checkCollision.checkDie(gamePanel.balloons.get(0), this);
                     gamePanel.checkCollision.checkDie(gamePanel.frog, this);
                     g2.drawImage(sprites.BombCenter1, bomX, bomY, SIZE, SIZE, null);
                     drawFrame(g2, sprites.BombVer1, sprites.BombUp1, bomX, bomY, frameUp, "Up");
@@ -189,7 +190,7 @@ public class Boom extends Entity {
                 } else if (countTime <= timeExploring * 2) {
                     gamePanel.checkCollision.checkFlameBomb(this, countTime, timeExploring);
                     gamePanel.checkCollision.checkDie(gamePanel.bomber, this);
-                    gamePanel.checkCollision.checkDie(gamePanel.balloon, this);
+                    gamePanel.checkCollision.checkDie(gamePanel.balloons.get(0), this);
                     gamePanel.checkCollision.checkDie(gamePanel.frog, this);
                     g2.drawImage(sprites.BombCenter2, bomX, bomY, SIZE, SIZE, null);
                     drawFrame(g2, sprites.BombVer2, sprites.BombUp2, bomX, bomY, frameUp, "Up");
@@ -199,7 +200,7 @@ public class Boom extends Entity {
                 } else if (countTime <= timeExploring * 3) {
                     gamePanel.checkCollision.checkFlameBomb(this, countTime, timeExploring);
                     gamePanel.checkCollision.checkDie(gamePanel.bomber, this);
-                    gamePanel.checkCollision.checkDie(gamePanel.balloon, this);
+                    gamePanel.checkCollision.checkDie(gamePanel.balloons.get(0), this);
                     gamePanel.checkCollision.checkDie(gamePanel.frog, this);
                     g2.drawImage(sprites.BombCenter3, bomX, bomY, SIZE, SIZE, null);
                     drawFrame(g2, sprites.BombVer3, sprites.BombUp3, bomX, bomY, frameUp, "Up");

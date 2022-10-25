@@ -11,10 +11,12 @@ import java.io.IOException;
 
 public class Balloon extends Enemies {
     GamePanel gamePanel;
+    Bomber bomber;
     protected int directionBalloon;
     protected AI ai;
 
     public Balloon(Bomber bomber, GamePanel gamePanel, Boom boom) {
+        this.bomber=bomber;
         this.gamePanel = gamePanel;
         setDefaultValues();
         sprites.getBalloonImage();
@@ -24,8 +26,8 @@ public class Balloon extends Enemies {
 
     @Override
     public void setDefaultValues() {
-        x = 400;
-        y = 400;
+        x = 48*20;
+        y = 48*14;
         speed = 3;
     }
 
@@ -42,5 +44,6 @@ public class Balloon extends Enemies {
             directionBalloon = ai.calculateDirection();
         }
         HandlePosition(directionBalloon);
+        gamePanel.checkCollision.checkDieEnemy(bomber,this);
     }
 }

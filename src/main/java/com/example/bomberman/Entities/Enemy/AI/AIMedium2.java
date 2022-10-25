@@ -2,7 +2,6 @@ package com.example.bomberman.Entities.Enemy.AI;
 
 import com.example.bomberman.Entities.Balloon;
 import com.example.bomberman.Entities.Bomber;
-import com.example.bomberman.Entities.Bomb;
 import com.example.bomberman.Entities.Boom;
 
 public class AIMedium2 extends AI{
